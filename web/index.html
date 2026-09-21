@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>MWX Downloader</title>
+  <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+  <main>
+    <header><div><span class="eyebrow">Локальный загрузчик</span><h1>MWX Downloader</h1></div><span class="local">● 127.0.0.1</span></header>
+    <section class="panel setup">
+      <label>Источник<select id="source"><option>Загрузка…</option></select></label>
+      <div id="sourceInfo" class="source-info"></div>
+      <div class="tabs"><button id="catalogTab" class="active">Каталог</button><button id="urlTab">Прямая ссылка</button></div>
+      <div id="catalogPane">
+        <div class="row"><input id="search" placeholder="Фильтр по названию"><button id="loadCatalog">Загрузить каталог</button></div>
+        <div id="catalog" class="catalog empty">Выберите источник и загрузите каталог</div>
+      </div>
+      <div id="urlPane" hidden>
+        <div class="row"><input id="titleUrl" placeholder="https://site.example/title"><button id="loadUrl">Открыть тайтл</button></div>
+      </div>
+    </section>
+    <section id="titlePanel" class="panel" hidden>
+      <div class="title-head"><img id="cover" alt=""><div><span id="titleSource" class="eyebrow"></span><h2 id="title"></h2><p id="summary"></p></div></div>
+      <div class="chapter-tools"><strong id="chapterCount"></strong><div><button id="all">Все</button><button id="none">Снять</button><button id="invert">Инвертировать</button></div></div>
+      <div id="chapters" class="chapters"></div>
+      <div class="download-bar"><span id="selectedCount">Выбрано: 0</span><button id="download" class="primary">Скачать выбранное</button></div>
+    </section>
+    <section class="panel"><div class="section-title"><h2>Загрузки</h2><button id="refreshJobs">Обновить</button></div><div id="jobs" class="jobs empty">Очередь пуста</div></section>
+    <div id="toast" role="status"></div>
+  </main>
+  <script src="/app.js"></script>
+</body>
+</html>

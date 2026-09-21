@@ -1,0 +1,405 @@
+{
+  "id": 2064,
+  "version": 16,
+  "old_sites": [
+    "yaoihub.ru",
+    "yaoihub.me",
+    "moonhub.me",
+    "moonhub.one",
+    "24.moonhub.live",
+    "12.moonhub.live",
+    "m1.moonhub.live",
+    "v1.moonhub.live",
+    "v2.moonhub.live",
+    "v3.moonhub.live"
+  ],
+  "title": "YaoiHub",
+  "host": "https://v3.moonhub.me",
+  "public_link": "https://v3.moonhub.me/explore",
+  "hash_tag": "yaoihub",
+  "folder": "yaoihub",
+  "name": "yaoihub",
+  "language": "ru",
+  "content_type": "manga",
+  "is_paid": true,
+  "is_mature": true,
+  "chapters_order": false,
+  "skip_catalog_test": false,
+  "icon_link": "https://raw.githubusercontent.com/veopot/mwx-json/main/img/yaoihub.png",
+  "self_link": "https://raw.githubusercontent.com/veopot/mwx-json/main/parsers/yaoihub.json",
+  "self_link2": "https://fant.my1.ru/mwparser/mwx/json/yaoihub.json",
+  "catalog_link": "https://raw.githubusercontent.com/veopot/mwx-json/main/catalogs/yaoihub.zip",
+  "file_type": "sqlite",
+  "manga_search_complete": {
+    "headers": {
+      "Accept": "*/*",
+      "cookie2": "confirm_age=1",
+      "cookie3": "preference_enabled_adult=1",
+      "Referer": "https://v3.moonhub.me/"
+    },
+    "search_link": "https://v3.moonhub.me/search/manga?query=$query$&page=$page$",
+    "query_type": "GET",
+    "add_manga": {
+      "next": "<div class=\"text-line-clamp",
+      "link": {
+        "token1": "href=\"",
+        "token2": "\"",
+        "replace": {
+          "prefix": "https://v3.moonhub.me"
+        }
+      },
+      "title": {
+        "skip": "href=\"",
+        "token1": "\">",
+        "token2": "</"
+      },
+      "uniq": {
+        "skip": "href=\"",
+        "token1": "\">",
+        "token2": "</"
+      },
+      "summary": {
+        "token1": "<div class=\"text-muted fs-0 fs-sm-1\">",
+        "token2": "</",
+        "replace": {
+          "match": "<.*?>",
+          "text": ""
+        }
+      },
+      "cover": {
+        "before": "href=\"",
+        "token1": "data-background-image=\"",
+        "token2": "\""
+      }
+    }
+  },
+  "manga_list_complete": {
+    "headers": {
+      "Accept": "*/*",
+      "cookie2": "confirm_age=1",
+      "cookie3": "preference_enabled_adult=1",
+      "Referer": "https://v3.moonhub.me/"
+    },
+    "iterator": {
+      "base_url": "https://v3.moonhub.me/explore/sort-is-rating?page=",
+      "append_nums": {
+        "from": 1,
+        "to": 598,
+        "step": 1
+      }
+    },
+    "add_manga": {
+      "next": "<a class=\"fw-medium\"",
+      "link": {
+        "token1": "href=\"",
+        "token2": "\""
+      },
+      "title": {
+        "skip": "href=\"",
+        "token1": "\">",
+        "token2": "</"
+      },
+      "uniq": {
+        "skip": "href=\"",
+        "token1": "\">",
+        "token2": "</"
+      }
+    },
+    "rating_auto_inc": {
+      "start": "30000",
+      "inc": -1
+    }
+  },
+  "manga_complete": {
+    "headers": {
+      "Accept": "*/*",
+      "cookie2": "confirm_age=1",
+      "cookie3": "preference_enabled_adult=1",
+      "Referer": "https://v3.moonhub.me/"
+    },
+    "title": {
+      "skip": "<head>",
+      "token1": "<title>Читать",
+      "token2": "</title>",
+      "replace": [
+        {
+          "match": "/",
+          "text": " | "
+        },
+        {
+          "match": "&amp;#039;",
+          "text": "'"
+        },
+        {
+          "match": ". Руманга онлайн.",
+          "text": ""
+        },
+        {
+          "match": ". OEL-манга онлайн.",
+          "text": ""
+        },
+        {
+          "match": ". Ранобэ онлайн.",
+          "text": ""
+        },
+        {
+          "match": ". Комикс западный онлайн.",
+          "text": ""
+        },
+        {
+          "match": ". Манхва онлайн.",
+          "text": ""
+        },
+        {
+          "match": ". Манга онлайн.",
+          "text": ""
+        },
+        {
+          "match": ". Маньхуа онлайн.",
+          "text": ""
+        }
+      ]
+    },
+    "uniq": {
+      "skip": "class=\"page-head\">",
+      "token1": "<h1 class=\"text-white\">",
+      "token2": "</h1>",
+      "replace": [
+        {
+          "match": "/",
+          "text": " | "
+        },
+        {
+          "match": "&amp;#039;",
+          "text": "'"
+        },
+        {
+          "match": ". Руманга онлайн.",
+          "text": ""
+        },
+        {
+          "match": ". OEL-манга онлайн.",
+          "text": ""
+        },
+        {
+          "match": ". Ранобэ онлайн.",
+          "text": ""
+        },
+        {
+          "match": ". Комикс западный онлайн.",
+          "text": ""
+        },
+        {
+          "match": ". Манхва онлайн.",
+          "text": ""
+        },
+        {
+          "match": ". Манга онлайн.",
+          "text": ""
+        },
+        {
+          "match": ". Маньхуа онлайн.",
+          "text": ""
+        }
+      ]
+    },
+    "additional_title": {
+      "skip": "\"alternativeHeadline\":",
+      "token1": "\"",
+      "token2": "\","
+    },
+    "cover": {
+      "after": "class=\"cover cover-detail\"",
+      "token1": "src=\"",
+      "token2": "\""
+    },
+    "author": {
+      "after": "<a href=\"/author/",
+      "token1": "\">",
+      "token2": "</",
+      "replace": {
+        "match": "<.*?>",
+        "text": ""
+      }
+    },
+    "summary": {
+      "skip": "class=\"markdown-style text-expandable-content\">",
+      "token1": "<p>",
+      "token2": "</div>",
+      "replace": [
+        {
+          "match": "\n",
+          "text": " "
+        },
+        {
+          "match": "<.*?>",
+          "text": ""
+        }
+      ]
+    },
+    "status": {
+      "complete": {
+        "value": "href=\"/explore/translation-is-completed\">"
+      },
+      "ongoing": {
+        "value": "href=\"/explore/translation-is-processing\">"
+      },
+      "single": {
+        "value": "/formats-is-single\">Сингл</a>"
+      }
+    },
+    "add_tags": {
+      "start": "<collapse-multiple class=\"d-block tags\">",
+      "end": "</collapse-multiple>",
+      "after": "href=\"/genre/",
+      "token1": ">",
+      "token2": "</a>",
+      "replace": {
+        "match": ">...<",
+        "text": ""
+      }
+    },
+    "is_mature": {
+      "start": "<collapse-multiple class=\"tags\">",
+      "end": "</collapse-multiple>",
+      "values": [
+        "Эротика",
+        "Юри",
+        "Яой"
+      ]
+    },
+    "chapters_from_page": {
+      "after": "property=\"og:url\"",
+      "token1": "content=\"/title/",
+      "token2": "\"",
+      "replace": [
+        {
+          "prefix": "https://v3.moonhub.me/title/"
+        },
+        {
+          "sufix": "/chapters"
+        }
+      ]
+    },
+    "add_chapter": {
+      "headers": {
+        "Accept": "*/*",
+        "cookie2": "confirm_age=1",
+        "cookie3": "preference_enabled_adult=1",
+        "Referer": "https://v3.moonhub.me/"
+      },
+      "start": ">Содержание<",
+      "end": "</chapter-list>",
+      "next": " <div class=\"d-flex align-items-center min-w-0 flex-grow-1\">",
+      "link": {
+        "token1": "href=\"",
+        "token2": "\""
+      },
+      "title": {
+        "skip": "href=\"",
+        "token1": ">",
+        "token2": "</a>",
+        "replace": {
+          "match": "<.*?>",
+          "text": " "
+        }
+      },
+      "uniq": {
+        "skip": "href=\"",
+        "token1": ">",
+        "token2": "</a>",
+        "replace": [
+          {
+            "match": "\n",
+            "text": ""
+          },
+          {
+            "match": "<.*?>",
+            "text": ""
+          }
+        ]
+      }
+    }
+  },
+  "chapter_complete": {
+    "headers": {
+      "Accept": "*/*",
+      "cookie2": "confirm_age=1",
+      "cookie3": "toast_58=true",
+      "Referer": "https://v3.moonhub.me/"
+    },
+    "add_numeration": true,
+    "add_images": {
+      "start": "<div class=\"d-flex flex-column flex-fill\">",
+      "end": ">Комментарии<",
+      "token1": "data-src=\"",
+      "token2": "\"",
+      "replace": [
+        {
+          "prefix": "https:"
+        },
+        {
+          "match": "\\\\",
+          "text": ""
+        }
+      ]
+    }
+  },
+  "test": [
+    {
+      "proc": "manga_list_complete",
+      "assert": {
+        "mangas": [
+          {
+            "link": "https://v3.moonhub.me/title/their_story",
+            "title": "Их_история"
+          },
+          {
+            "link": "https://v3.moonhub.me/title/baegman_won_ui_lomaense"
+          }
+        ],
+        "mangas_count": ">=20"
+      }
+    },
+    {
+      "proc": "manga_complete",
+      "link": "https://v3.moonhub.me/title/youre_here",
+      "title": "Ты здесь (Here U Are)",
+      "assert": {
+        "author": "@Д. Цзюнь",
+        "cover": "https://static.v3.moonhub.me/uploads/media/manga_cover/thumbnail/big/0018/70/1769097.jpeg",
+        "summary": "@^(Приём новичков)",
+        "status": "complete",
+        "chapters_count": ">=100",
+        "chapters": [
+          {
+            "folder": "Том 1_ Глава 1\\",
+            "link": "https://v3.moonhub.me/read/59417",
+            "title": "Том 1. Глава 1"
+          },
+          {
+            "link": "https://v3.moonhub.me/read/59416",
+            "title": "Том 1. Глава 2"
+          }
+        ]
+      }
+    },
+    {
+      "proc": "chapter_complete",
+      "link": "https://v3.moonhub.me/read/59417",
+      "assert": {
+        "pages": [
+          {
+            "image": "https://1hubst.guru/uploads/media/scan/0029/54/6e4590bc96ab2a0a146b24dc9e322fdaa45fc8dd.jpg"
+          },
+          {
+            "image": "https://1hubst.guru/uploads/media/scan/0029/54/aeaf0a6ca11c6414565fe4a523503a5b6cb9832a.jpg"
+          },
+          {
+            "image": "https://1hubst.guru/uploads/media/scan/0029/54/850d03bd5558ce049fb6ee331e534a9a5d1ed443.jpg"
+          }
+        ]
+      }
+    }
+  ]
+}

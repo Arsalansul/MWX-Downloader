@@ -1,0 +1,502 @@
+{
+  "id": 30432,
+  "version": 83,
+  "old_ids": [
+    30333
+  ],
+  "old_sites": [
+    "henchan.pro",
+    "xxxx.hentaichan.live",
+    "xx.hentaichan.live",
+    "hentai-chan.pro",
+    "hentaichan.live",
+    "hen-chan.pro",
+    "hchan.pro",
+    "y.hentaichan.live",
+    "hchan.me",
+    "hchan.live",
+    "xxxxx.hentaichan.live",
+    "xx.henchan.pro",
+    "y.hchan.live",
+    "x1.h-chan.me",
+    "x8.h-chan.me",
+    "xxxx.henchan.pro"
+  ],
+  "title": "Хентай-тян",
+  "host": "https://x9.h-chan.me",
+  "public_link": "https://x9.h-chan.me/mostfavorites",
+  "folder": "hentaichan",
+  "name": "hentaichan",
+  "language": "ru",
+  "is_mature": true,
+  "chapters_order": false,
+  "author": {
+    "name": "Veopot & Lomik_XP",
+    "email": "fant-net@ya.ru"
+  },
+  "skip_catalog_test": false,
+  "icon_link": "https://raw.githubusercontent.com/veopot/mwx-json/main/img/hentaichan.png",
+  "self_link": "https://raw.githubusercontent.com/veopot/mwx-json/main/parsers/hentaichan.json",
+  "self_link2": "https://fant.my1.ru/mwparser/mwx/json/hentaichan.json",
+  "catalog_link": "https://raw.githubusercontent.com/veopot/mwx-json/main/catalogs/hentaichan.zip",
+  "file_type": "sqlite",
+  "authorization_complete": {
+    "logo": "https://raw.githubusercontent.com/veopot/mwx-json/main/img/hentaichan.png",
+    "registration": "https://x9.h-chan.me/index.php?do=register",
+    "expires": 31449600000,
+    "values": {
+      "login": "submit",
+      "image": "Вход",
+      "login_name": {
+        "label": "Login",
+        "hint": "Введите свой логин с сайта Хентай-тян!",
+        "kind": "text"
+      },
+      "login_password": {
+        "label": "Password",
+        "hint": "Введите свой пароль с сайта Хентай-тян!",
+        "kind": "password"
+      }
+    },
+    "request": {
+      "method": "post",
+      "url": "https://x9.h-chan.me/index.php"
+    },
+    "response_check": {
+      "cookies": {
+        "dle_user_id": "@\\d+"
+      },
+      "headers": {
+        "Set-Cookie": "@dle_user_id=\\d+"
+      }
+    }
+  },
+  "manga_search_complete": {
+    "search_link": "https://x9.h-chan.me/?do=search&subaction=search&story=$query$&search_start=$page$",
+    "query_type": "GET",
+    "add_manga": {
+      "next": "<div class=\"content_row\"",
+      "link": {
+        "after": "<h2>",
+        "token1": "href=\"",
+        "token2": "\""
+      },
+      "title": {
+        "token1": "title=\"",
+        "token2": "\""
+      },
+      "cover": {
+        "token1": "src=\"",
+        "token2": "\"",
+        "replace": {
+          "match": "https://img4.imgschan.xyzhttps//imgcover.imgschan.xyz",
+          "text": "https://img4.imgschan.xyz"
+        }
+      },
+      "uniq": {
+        "token1": "title=\"",
+        "token2": "\""
+      }
+    }
+  },
+  "manga_list_complete": {
+    "iterator": {
+      "base_url": "https://x9.h-chan.me/manga/new&n=favdesc?offset=",
+      "append_nums": {
+        "from": 0,
+        "to": 24900,
+        "step": 20
+      }
+    },
+    "add_manga": {
+      "next": "<div class=\"content_row\"",
+      "link": {
+        "token1": "href=\"",
+        "token2": "\""
+      },
+      "uniq": {
+        "skip": "href=\"",
+        "token1": "class=\"title_link\">",
+        "token2": "</",
+        "replace": {
+          "match": " - (.*)",
+          "text": ""
+        }
+      },
+      "title": {
+        "skip": "href=\"",
+        "token1": "class=\"title_link\">",
+        "token2": "</",
+        "replace": {
+          "match": " - (.*)",
+          "text": ""
+        }
+      }
+    },
+    "rating_auto_inc": {
+      "start": "50000",
+      "inc": -1
+    }
+  },
+  "manga_complete": [
+    {
+      "condition": "Похожая манга",
+      "headers": {
+        "accept": "text/html,application/xhtml+xml,application/xml;q=d0.9,image/webp,image/apng,*/*;q=d0.8,application/signed-exchange;v=db3;q=d0.9",
+        "accept-language": "ru-RU,ru;q=d0.9,en-US;q=d0.8,en;q=d0.7",
+        "referer": "https://x9.h-chan.me/"
+      },
+      "title": {
+        "skip": "class=\"title_top_a\"",
+        "token1": "\">",
+        "token2": "</"
+      },
+      "uniq": {
+        "skip": "class=\"title_top_a\"",
+        "token1": "\">",
+        "token2": "</"
+      },
+      "author": {
+        "skip": ">Автор</",
+        "token1": "'>",
+        "token2": "</a>",
+        "replace": {
+          "match": "<.*?>",
+          "text": ""
+        }
+      },
+      "summary": {
+        "skip": "<div id=\"description\"",
+        "token1": "<br />",
+        "token2": "</div>",
+        "replace": {
+          "match": "<.*?>",
+          "text": ""
+        }
+      },
+      "status": {
+        "single": {
+          "start": "id=\"right\">",
+          "end": "id=\"info_wrap\">",
+          "values": [
+            "Похожая манга",
+            "похожая манга",
+            "Сингл"
+          ]
+        },
+        "default": "single",
+        "ongoing": {
+          "start": "id=\"right\">",
+          "end": "id=\"info_wrap\">",
+          "values": [
+            "Все главы",
+            "Все части"
+          ]
+        }
+      },
+      "cover": {
+        "after": "id=\"cover\"",
+        "token1": "src=\"",
+        "token2": "\""
+      },
+      "add_genre": {
+        "after": "<li class='sidetag'>",
+        "token1": "tags/-",
+        "token2": "' rel="
+      },
+      "add_tag": {
+        "after": "<a href='/tags/-",
+        "token1": "-",
+        "token2": "' rel='nofollow' title='",
+        "replace": {
+          "match": "_",
+          "text": " "
+        }
+      },
+      "add_chapter": {
+        "next": "id=\"manga_images\"",
+        "link": {
+          "token1": "/online/",
+          "token2": "\"",
+          "replace": [
+            {
+              "prefix": "http://exhentai-dono.me/online/"
+            },
+            {
+              "match": ".html",
+              "text": ".html?development_access=true"
+            }
+          ]
+        },
+        "title": {
+          "after": "<a href=\"",
+          "token1": "title=\"",
+          "token2": " читать онлайн с"
+        }
+      }
+    },
+    {
+      "condition": "",
+      "headers": {
+        "accept": "text/html,application/xhtml+xml,application/xml;q=d0.9,image/webp,image/apng,*/*;q=d0.8,application/signed-exchange;v=db3;q=d0.9",
+        "accept-language": "ru-RU,ru;q=d0.9,en-US;q=d0.8,en;q=d0.7",
+        "referer": "https://x9.h-chan.me/"
+      },
+      "title": {
+        "skip": "class=\"title_top_a\"",
+        "token1": "\">",
+        "token2": "</a>",
+        "replace": [
+          {
+            "match": "[0-9]",
+            "text": ""
+          },
+          {
+            "match": "глава",
+            "text": ""
+          },
+          {
+            "match": "Глава",
+            "text": ""
+          },
+          {
+            "match": "-   ",
+            "text": ""
+          },
+          {
+            "match": "  ",
+            "text": " "
+          },
+          {
+            "match": "Часть",
+            "text": ""
+          },
+          {
+            "match": "часть",
+            "text": ""
+          }
+        ]
+      },
+      "uniq": {
+        "skip": "class=\"title_top_a\"",
+        "token1": "\">",
+        "token2": "</a>",
+        "replace": {
+          "match": " - (.*)",
+          "text": ""
+        }
+      },
+      "author": {
+        "skip": ">Автор</",
+        "token1": "'>",
+        "token2": "</a>",
+        "replace": {
+          "match": "<.*?>",
+          "text": ""
+        }
+      },
+      "summary": {
+        "skip": "<div id=\"description\"",
+        "token1": "<br />",
+        "token2": "</div>",
+        "replace": {
+          "match": "<.*?>",
+          "text": ""
+        }
+      },
+      "status": {
+        "single": {
+          "start": "id=\"right\">",
+          "end": "id=\"info_wrap\">",
+          "values": [
+            "Похожая манга",
+            "похожая манга",
+            "Сингл"
+          ]
+        },
+        "default": "single",
+        "ongoing": {
+          "start": "id=\"right\">",
+          "end": "id=\"info_wrap\">",
+          "values": [
+            "Все главы",
+            "Все части"
+          ]
+        }
+      },
+      "cover": {
+        "after": "id=\"cover\"",
+        "token1": "src=\"",
+        "token2": "\""
+      },
+      "add_genre": {
+        "after": "<li class='sidetag'>",
+        "token1": "tags/-",
+        "token2": "' rel="
+      },
+      "add_tag": {
+        "after": "<a href='/tags/-",
+        "token1": "-",
+        "token2": "' rel='nofollow' title='",
+        "replace": {
+          "match": "_",
+          "text": " "
+        }
+      },
+      "chapters_from_page": {
+        "skip": "id=\"right\">",
+        "token1": "href=\"/related",
+        "token2": "?",
+        "replace": {
+          "prefix": "https://x9.h-chan.me/related"
+        },
+        "next": {
+          "before": ">Вперед</a>",
+          "token1": "href='",
+          "token2": "'",
+          "replace": {
+            "prefix": "%%host%%/%%path%%"
+          }
+        }
+      },
+      "add_chapter": {
+        "start": "id=\"right\">",
+        "end": "</html>",
+        "next": "class=\"related\">",
+        "link": {
+          "token1": "href=\"/manga/",
+          "token2": "\"",
+          "replace": [
+            {
+              "prefix": "http://exhentai-dono.me/online/"
+            },
+            {
+              "match": ".html",
+              "text": ".html?development_access=true"
+            }
+          ]
+        },
+        "title": {
+          "after": "href=\"",
+          "token1": "title=\"",
+          "token2": "\""
+        }
+      }
+    }
+  ],
+  "chapter_complete": {
+    "add_images": {
+      "start": "\"fullimg\":",
+      "token1": "[",
+      "token2": "]",
+      "split": ",",
+      "end": "]",
+      "replace": [
+        {
+          "match": "'",
+          "text": ""
+        },
+        {
+          "match": "\"",
+          "text": ""
+        }
+      ]
+    },
+    "postfix": "?development_access=true"
+  },
+  "test": [
+    {
+      "proc": "manga_list_complete",
+      "testpages": "3",
+      "assert": {
+        "mangas": [
+          {
+            "title": "Pandemonium",
+            "link": "https://x9.h-chan.me/manga/17531-pandemonium-chast-1.html",
+            "uniq": "Pandemonium"
+          }
+        ],
+        "mangas_count": ">=3"
+      }
+    },
+    {
+      "proc": "manga_complete",
+      "link": "https://x9.h-chan.me/manga/23093-moya-gruppovaya-akademiya.html",
+      "title": "МОЯ ГРУППОВАЯ АКАДЕМИЯ (MY GANGBANG ACADEMIA)",
+      "assert": {
+        "author": "St.Germain-Sal",
+        "cover": "https://imgcover.imgschan.xyz/showfull_retina/manga/s/1505627648_shinnihon-pepsitou-st.germain-sal-my-gangbang-academia-boku-no-hero-academia-russian-ilion/scan_01.jpg",
+        "summary": "@^()",
+        "status": "single",
+        "genres_count": ">=0",
+        "chapters_count": ">=1",
+        "chapters": [
+          {
+            "folder": "23093-moya-gruppovaya-akademiya.html/",
+            "link": "http://exhentai-dono.me/online/23093-moya-gruppovaya-akademiya.html?development_access=true?cacheId=1505627648",
+            "title": "МОЯ ГРУППОВАЯ АКАДЕМИЯ"
+          }
+        ]
+      }
+    },
+    {
+      "proc": "manga_complete",
+      "link": "https://x9.h-chan.me/manga/9179-kyoushi-to-seito-to-glava-1.html",
+      "title": "Kyoushi to Seito to - глава 1",
+      "assert": {
+        "author": "@Fuuga",
+        "cover": "https://imgcover.imgschan.xyz/showfull_retina/manga/k/1370186331_kyoushi-to-seito-to-ch1/teacher_and_student_004.jpg",
+        "summary": "@^()",
+        "genres": "@romance",
+        "status": "ongoing",
+        "genres_count": ">=0",
+        "chapters_count": ">=1",
+        "chapters": [
+          {
+            "folder": "9411-kyoushi-to-seito-to-glava-7.html/",
+            "link": "http://exhentai-dono.me/online/9411-kyoushi-to-seito-to-glava-7.html?development_access=true",
+            "title": "Kyoushi to Seito to - глава 7"
+          }
+        ]
+      }
+    },
+    {
+      "proc": "manga_complete",
+      "link": "https://x9.h-chan.me/manga/23009-ayanami-rey-chast-4.html",
+      "title": "Аянами Рей",
+      "assert": {
+        "author": "Nakayohi Mogudan",
+        "cover": "https://imgcover.imgschan.xyz/showfull_retina/manga/n/1504416738_nakayohi-mogudan-mogudan-ayanami-4-boku-no-kanojohen-neon-genesis-evangelion-russianiliondecensored/001.jpg",
+        "summary": "@^()",
+        "status": "ongoing",
+        "genres_count": ">=0",
+        "chapters_count": ">=3",
+        "chapters": [
+          {
+            "folder": "28771-ayanami-rey-chast-8.html/",
+            "link": "http://exhentai-dono.me/online/28771-ayanami-rey-chast-8.html?development_access=true",
+            "title": "Аянами Рей - часть 8"
+          }
+        ]
+      }
+    },
+    {
+      "proc": "chapter_complete",
+      "link": "http://exhentai-dono.me/online/28771-ayanami-rey-chast-8.html?development_access=true",
+      "assert": {
+        "pages": [
+          {
+            "image": "https://img.imgschan.xyz/manganew/m/1564768528_mogudannekopunch-bashibashi-ayanami-chapter-8-girlfriend-edition/001.jpg"
+          },
+          {
+            "image": "https://img.imgschan.xyz/manganew/m/1564768528_mogudannekopunch-bashibashi-ayanami-chapter-8-girlfriend-edition/003.jpg"
+          },
+          {
+            "image": "https://img.imgschan.xyz/manganew/m/1564768528_mogudannekopunch-bashibashi-ayanami-chapter-8-girlfriend-edition/004.jpg"
+          }
+        ],
+        "pages_count": "33"
+      }
+    }
+  ]
+}

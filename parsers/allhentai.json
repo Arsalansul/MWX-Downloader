@@ -1,0 +1,405 @@
+{
+  "id": 30401,
+  "version": 113,
+  "title": "All Hentai",
+  "old_ids": [
+    1616
+  ],
+  "old_sites": [
+    "allhentai.ru",
+    "wwv.allhen.me",
+    "wwv.allhen.live",
+    "22.allhen.online",
+    "2023.allhen.online",
+    "z.allhen.online",
+    "24.allhen.online",
+    "z.allhen.online",
+    "z.ahen.me"
+  ],
+  "host": "https://20.allhen.online",
+  "public_link": "https://20.allhen.online",
+  "hash_tag": "allhentai",
+  "folder": "allhentai",
+  "name": "allhentai",
+  "language": "ru",
+  "is_mature": true,
+  "chapters_order": false,
+  "skip_catalog_test": false,
+  "icon_link": "https://raw.githubusercontent.com/veopot/mwx-json/main/img/allhen.png",
+  "self_link": "https://raw.githubusercontent.com/veopot/mwx-json/main/parsers/allhentai.json",
+  "self_link2": "https://fant.my1.ru/mwparser/mwx/json/allhentai.json",
+  "catalog_link": "https://raw.githubusercontent.com/veopot/mwx-json/main/catalogs/allhentai.zip",
+  "file_type": "sqlite",
+  "manga_search_complete": {
+    "search_link": "https://20.allhen.online/search/advancedResults?q=$query$&offset=&years=1991%2C2025&sortType=RATING",
+    "headers": {
+      "accept": "*/*",
+      "Referer": "https://20.allhen.online/search/advanced"
+    },
+    "add_manga": {
+      "next": "class=\"desc\">",
+      "summary": {
+        "token1": "class=\"manga-description\">",
+        "token2": "</div>",
+        "replace": [
+          {
+            "match": "<.*?>",
+            "text": " "
+          },
+          {
+            "match": "\n",
+            "text": " "
+          },
+          {
+            "match": "                              ",
+            "text": " "
+          }
+        ]
+      },
+      "link": {
+        "token1": "<a href=\"",
+        "token2": "\""
+      },
+      "cover": {
+        "before": "<a href=\"",
+        "token1": "data-original='",
+        "token2": "'"
+      },
+      "title": {
+        "token1": "title=\"",
+        "token2": "\""
+      },
+      "uniq": {
+        "token1": "title=\"",
+        "token2": "\""
+      }
+    }
+  },
+  "manga_list_complete": {
+    "headers": {
+      "Accept": "*/*",
+      "skin": "time",
+      "resize_type": "real",
+      "comments-floating-mode": "compact",
+      "gdpr-flag": "dismiss",
+      "Referer": "https://20.allhen.online/"
+    },
+    "iterator": {
+      "base_url": "https://20.allhen.online/list?sortType=RATING&offset=",
+      "append_nums": {
+        "from": 0,
+        "to": 28650,
+        "step": 50
+      }
+    },
+    "add_manga": {
+      "start": "tiles row",
+      "next": "class=\"img",
+      "link": {
+        "token1": "href=\"",
+        "token2": "\""
+      },
+      "title": {
+        "skip": "href=\"",
+        "token1": "title='",
+        "token2": "'"
+      },
+      "cover": {
+        "token1": "data-original='",
+        "token2": "'",
+        "replace": {
+          "match": "_p.jpg",
+          "text": ".jpg"
+        }
+      }
+    },
+    "link_corrector": [
+      {
+        "match": "http://20.allhen.online",
+        "text": "https://20.allhen.online"
+      }
+    ],
+    "rating_auto_inc": {
+      "start": 30000,
+      "inc": -1
+    }
+  },
+  "manga_complete": {
+    "headers": {
+      "Accept": "*/*",
+      "skin": "time",
+      "resize_type": "real",
+      "comments-floating-mode": "compact",
+      "gdpr-flag": "dismiss",
+      "Referer": "https://20.allhen.online/"
+    },
+    "title": {
+      "after": "<title",
+      "token1": ">",
+      "token2": "</title>",
+      "replace": [
+        {
+          "match": "порно мангу",
+          "text": ""
+        },
+        {
+          "match": "хентай комикс",
+          "text": ""
+        },
+        {
+          "match": "Хентай Манга",
+          "text": ""
+        },
+        {
+          "match": "Хентай комикс",
+          "text": ""
+        },
+        {
+          "match": "\n",
+          "text": ""
+        },
+        {
+          "match": "      ",
+          "text": " "
+        },
+        {
+          "match": "порно (.*?)   - AllHentai",
+          "text": ""
+        },
+        {
+          "match": "онлайн и получи полезные сведения о нём, а ещё прокомментировать и всё это можно сделать бесплатно на AllHentai.",
+          "text": ""
+        },
+        {
+          "match": "онлайн и узнай информацию о нем, и ещё прочитать отзывы и всё это совершено бесплатно на AllHentai.",
+          "text": ""
+        },
+        {
+          "match": "в онлайне и получи информацию о нём, а так же узнать мнения читателей и всё это у нас на AllHentai.",
+          "text": ""
+        },
+        {
+          "match": "online и узнай сведения о нем, а ещё написать обзор и всё это бесплатно на AllHentai.",
+          "text": ""
+        }
+      ]
+    },
+    "uniq": {
+      "after": "itemprop=\"alternativeHeadline\"",
+      "token1": "content=\"",
+      "token2": "\""
+    },
+    "author": {
+      "after": "href=\"/list/person/",
+      "token1": "\">",
+      "token2": "</"
+    },
+    "summary": {
+      "after": "<div class=\"cr-description__content\"",
+      "token1": ">",
+      "token2": "</div>",
+      "replace": [
+        {
+          "clear_escape": true
+        },
+        {
+          "match": "<.*?>",
+          "text": ""
+        }
+      ]
+    },
+    "need_auth": [
+      "залогиненным",
+      "доступна только",
+      "хентай"
+    ],
+    "status": {
+      "complete": {
+        "start": "Перевод</div>",
+        "end": "</span>",
+        "values": [
+          "завершен",
+          "завершён",
+          "Переведена",
+          "Сингл",
+          "переведено",
+          "Завершён"
+        ]
+      },
+      "ongoing": {
+        "start": "Перевод</div>",
+        "end": "</span>",
+        "values": [
+          "продолжается",
+          ">Продолжается<",
+          "переводится"
+        ]
+      },
+      "single": "Сингл,",
+      "licensed": "Главы удалены",
+      "unknown": "нет ни одной главы"
+    },
+    "cover": {
+      "skip": "<div class=\"cr-hero-poster",
+      "token1": "src=\"",
+      "token2": "\""
+    },
+    "is_mature": "hentai",
+    "add_tags": {
+      "start": "<div class=\"cr-tags\"",
+      "end": "<div class=\"cr-tags__toggle",
+      "after": "href=\"/list/",
+      "token1": "<span>",
+      "token2": "</span>"
+    },
+    "need_auth_genres": [
+      "сэйнэн",
+      "сёдзё для взрослых",
+      "этти",
+      "эротика",
+      "юри",
+      "яой",
+      "завершен",
+      "Переведена",
+      "Сингл",
+      "залогиненным",
+      "доступна только",
+      "хентай"
+    ],
+    "add_chapter": {
+      "headers": {
+        "Accept": "*/*",
+        "skin": "time",
+        "resize_type": "real",
+        "comments-floating-mode": "compact",
+        "gdpr-flag": "dismiss",
+        "Referer": "https://20.allhen.online/"
+      },
+      "start": "<table class=\"table table-hover\">",
+      "end": "</table>",
+      "next": "item-title\"",
+      "link": {
+        "token1": "<a href=\"",
+        "token2": "\"",
+        "replace": {
+          "sufix": "?d=Mjc2ODk"
+        }
+      },
+      "title": {
+        "after": "<a href=\"",
+        "token1": ">",
+        "token2": "<",
+        "replace": {
+          "match": "(.*)\n          \n          ",
+          "text": ""
+        }
+      },
+      "uniq": {
+        "after": "href=\"",
+        "token1": "/vol",
+        "token2": "\"",
+        "replace": {
+          "match": "\\?.*",
+          "text": ""
+        }
+      }
+    }
+  },
+  "chapter_complete": {
+    "headers": {
+      "Accept": "*/*",
+      "Referer": "https://20.allhen.online/"
+    },
+    "no_404": true,
+    "images": true,
+    "add_pages": {
+      "start": "rm_h.readerInit(",
+      "token1": "['",
+      "token2": "],",
+      "end": "]],",
+      "replace": {
+        "match": "(.*?)','(.*?)',\"(.*?)\".*",
+        "text": "$1$3"
+      }
+    },
+    "add_servers": {
+      "start": "[{\"path",
+      "token1": "\":\"",
+      "token2": "\"",
+      "end": "}]",
+      "replace": {
+        "prefix": "https:"
+      }
+    },
+    "prefix": "https:"
+  },
+  "test": [
+    {
+      "proc": "manga_list_complete",
+      "assert": {
+        "mangas": [
+          {
+            "link": "https://20.allhen.online/delovoi_stil",
+            "title": "Деловой стиль (Business Casual)",
+            "uniq": "delovoi_stil"
+          }
+        ],
+        "mangas_count": ">100"
+      }
+    },
+    {
+      "proc": "manga_complete",
+      "link": "https://20.allhen.online/a_peephole",
+      "title": "Nozoki ana (A peephole)",
+      "assert": {
+        "cover": "https://static.allhentai.ru/uploads/pics/00/02/230.jpg",
+        "summary": "@^(Кидо Тацухико переехал в Токио)",
+        "genres": "@drama",
+        "status": "complete",
+        "genres_count": ">=2",
+        "chapters_count": ">=115",
+        "chapters": [
+          {
+            "title": "Дыра 1 - 1",
+            "link": "https://20.allhen.online/a_peephole/vol1/1?d=Mjc2ODk",
+            "folder": "Дыра 1 - 1/"
+          }
+        ]
+      }
+    },
+    {
+      "proc": "chapter_complete",
+      "link": "https://20.allhen.online/tetrad_po_trusikam/vol1/95?d=Mjc2ODk",
+      "assert": {
+        "pages": [
+          {
+            "image": "https://d.aaa200.rocks/auto/06/27/19/1.png_res.png?t=1679933932&u=0&h=fln3L8hZDKzb6ISLgI7P1A"
+          },
+          {
+            "image": "https://a.aaa200.rocks/auto/06/27/19/2.png_res.png?t=1679933932&u=0&h=PVzk3Th_IxuCwRhOtDqxag"
+          },
+          {
+            "image": "https://e.aaa200.rocks/auto/06/27/19/3.png_res.png?t=1679933932&u=0&h=XWGnJzoVg2brbfoxQagO9A"
+          }
+        ]
+      }
+    },
+    {
+      "proc": "chapter_complete",
+      "link": "https://20.allhen.online/a_peephole/vol1/1?d=Mjc2ODk",
+      "assert": {
+        "pages": [
+          {
+            "image": "http://b.aaa200.rocks/auto/00/35/25/a-peephole-nozokiana_v1_ch1_000.png?t=1626802845&u=0&h=OxoEPIp7LOopmQep9z_yHA"
+          },
+          {
+            "image": "http://c.aaa200.rocks/auto/00/35/25/a-peephole-nozokiana_v1_ch1_001.png?t=1626802845&u=0&h=ZYQ1RKQTOUO81t6dCcmVNA"
+          },
+          {
+            "image": "http://c.aaa200.rocks/auto/00/35/25/a-peephole-nozokiana_v1_ch1_002.png?t=1626802845&u=0&h=k5O-KYnahxnZriok4SKn9w"
+          }
+        ]
+      }
+    }
+  ]
+}

@@ -1,0 +1,351 @@
+{
+  "id": 30462,
+  "old_ids": [
+    41003
+  ],
+  "version": 41,
+  "title": "Com-X.life (unstable)",
+  "host": "https://com-x.life/",
+  "public_link": "https://com-x.life/ComicList/",
+  "folder": "comxlife",
+  "name": "comxlife",
+  "language": "ru",
+  "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/147.0.0.0 Safari/537.36",
+  "icon_link": "https://raw.githubusercontent.com/veopot/mwx-json/main/img/com-x.png",
+  "self_link": "https://raw.githubusercontent.com/veopot/mwx-json/main/parsers/com-x.json",
+  "self_link2": "https://fant.my1.ru/mwparser/mwx/json/com-x.json",
+  "catalog_link": "https://raw.githubusercontent.com/veopot/mwx-json/main/catalogs/com-x.zip",
+  "file_type": "sqlite",
+  "authorization_complete": {
+    "headers": {
+      "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7",
+      "Accept-Language": "ru-RU,ru;q=0.9,en-US;q=0.8,en;q=0.7",
+      "Referer": "https://com-x.life/",
+      "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/147.0.0.0 Safari/537.36",
+      "Content-Type": "application/x-www-form-urlencoded"
+    },
+    "logo": "https://raw.githubusercontent.com/veopot/mwx-json/main/img/com-x.png",
+    "registration": "https://com-x.life/index.php?do=regin",
+    "expires": 31536000,
+    "values": {
+      "login": "submit",
+      "login_name": {
+        "label": "login_name",
+        "hint": "Введите свой логин с сайта Манга-чан!",
+        "kind": "text"
+      },
+      "login_password": {
+        "label": "login_password",
+        "hint": "Введите свой пароль с сайта Манга-чан!",
+        "kind": "password"
+      }
+    },
+    "request": {
+      "method": "post",
+      "url": "https://com-x.life/index.php"
+    },
+    "response_check": {
+      "cookies": {
+        "dle_password": "@\\d+"
+      },
+      "headers": {
+        "Set-Cookie": "@dle_password=\\d+"
+      }
+    }
+  },
+  "manga_search_complete": {
+    "headers": {
+      "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7",
+      "Accept-Language": "ru-RU,ru;q=0.9,en-US;q=0.8,en;q=0.7",
+      "Referer": "https://com-x.life/",
+      "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/147.0.0.0 Safari/537.36",
+      "sec-ch-ua": "\"Google Chrome\";v=\"147\", \"Not.A/Brand\";v=\"8\", \"Chromium\";v=\"147\"",
+      "sec-ch-ua-mobile": "?0",
+      "sec-ch-ua-platform": "\"Windows\"",
+      "cookie2": "PHPSESSID=dd3fa08be6cebb00f1d3ad2e8c9c73fa"
+    },
+    "search_link": "https://com-x.life/index.php?do=search&subaction=search&search_start=$page$&story=$query$",
+    "query_type": "GET",
+    "add_manga": {
+      "start": ">Поиск по сайту</",
+      "end": ">Последние комментарии</",
+      "next": "class=\"readed__title\">",
+      "link": {
+        "token1": "href=\"",
+        "token2": "\""
+      },
+      "uniq": {
+        "token1": "href=\"https://com-x.life/",
+        "token2": ".html"
+      },
+      "title": {
+        "skip": "href=\"",
+        "token1": "\">",
+        "token2": "</"
+      },
+      "cover": {
+        "before": "href=\"",
+        "token1": "data-src=\"",
+        "token2": "\"",
+        "replace": {
+          "prefix": "https://com-x.life"
+        }
+      },
+      "summary": {
+        "token1": "class=\"readed__info\">",
+        "token2": "</",
+        "replace": {
+          "match": "<.*?>",
+          "text": ""
+        }
+      }
+    }
+  },
+  "manga_list_complete": {
+    "headers": {
+      "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7",
+      "Accept-Language": "ru-RU,ru;q=0.9,en-US;q=0.8,en;q=0.7",
+      "Referer": "https://com-x.life/",
+      "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/147.0.0.0 Safari/537.36",
+      "sec-ch-ua": "\"Google Chrome\";v=\"147\", \"Not.A/Brand\";v=\"8\", \"Chromium\";v=\"147\"",
+      "sec-ch-ua-mobile": "?0",
+      "sec-ch-ua-platform": "\"Windows\"",
+      "cookie2": "PHPSESSID=dd3fa08be6cebb00f1d3ad2e8c9c73fa"
+    },
+    "iterator": {
+      "base_url": "https://com-x.life/comix-read/page/",
+      "append_nums": {
+        "from": 1,
+        "to": 1617,
+        "step": 1,
+        "sufix": "/"
+      }
+    },
+    "add_manga": {
+      "next": "class=\"readed__title\">",
+      "link": {
+        "token1": "href=\"",
+        "token2": "\""
+      },
+      "uniq": {
+        "token1": "href=\"https://com-x.life/",
+        "token2": ".html"
+      },
+      "title": {
+        "skip": "href=\"",
+        "token1": "\">",
+        "token2": "</"
+      }
+    }
+  },
+  "manga_complete": {
+    "headers": {
+      "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7",
+      "Accept-Language": "ru-RU,ru;q=0.9,en-US;q=0.8,en;q=0.7",
+      "Connection": "keep-alive",
+      "Referer": "https://com-x.life/",
+      "Sec-Fetch-Dest": "document",
+      "Sec-Fetch-Mode": "navigate",
+      "Sec-Fetch-Site": "same-origin",
+      "Sec-Fetch-User": "?1",
+      "Upgrade-Insecure-Requests": "1",
+      "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/147.0.0.0 Safari/537.36",
+      "sec-ch-ua": "\"Google Chrome\";v=\"147\", \"Not.A/Brand\";v=\"8\", \"Chromium\";v=\"147\"",
+      "sec-ch-ua-mobile": "?0",
+      "sec-ch-ua-platform": "\"Windows\"",
+      "cookie2": "__guard_trust=Mi41Ni4yNDEuMTA3fDE3NzcxMDc5NTZ8OTU5MDMyfDNkOTY2MTUwYzQwNjIzZTIwMDI0YTE5MzUxYjg2NTRk"
+    },
+    "title": {
+      "after": "property=\"og:title\"",
+      "token1": "content=\"",
+      "token2": "\"",
+      "replace": {
+        "match": "скачать/читать онлайн",
+        "text": ""
+      }
+    },
+    "uniq": {
+      "after": "property=\"og:title\"",
+      "token1": "content=\"",
+      "token2": "\""
+    },
+    "cover": {
+      "after": "property=\"og:image\"",
+      "token1": "content=\"",
+      "token2": "\""
+    },
+    "author": {
+      "skip": "Издател",
+      "token1": "</b>:",
+      "token2": "</"
+    },
+    "summary": {
+      "token1": "<div class=\"page__text full-text clearfix\">",
+      "token2": "</div>",
+      "replace": {
+        "match": "<.*?>",
+        "text": " "
+      }
+    },
+    "rating": {
+      "token1": "\"ratingCount\":\"",
+      "token2": "\""
+    },
+    "status": {
+      "complete": [
+        "Завершён<",
+        "Завершен<",
+        "Лимитка",
+        "Ван шот",
+        "Графический роман"
+      ],
+      "ongoing": [
+        "Продолжается<",
+        "перевод заморожен"
+      ],
+      "unknown": [
+        "Неизвестно"
+      ]
+    },
+    "read_dir": {
+      "right_to_left": "манга",
+      "left_to_right": "комикс"
+    },
+    "add_tag": {
+      "after": "/genre/",
+      "token1": "\">",
+      "token2": "</a>"
+    },
+    "add_chapter": {
+      "headers": {
+        "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7",
+        "Accept-Language": "ru-RU,ru;q=0.9,en-US;q=0.8,en;q=0.7",
+        "Connection": "keep-alive",
+        "Referer": "https://com-x.life/",
+        "Sec-Fetch-Dest": "document",
+        "Sec-Fetch-Mode": "navigate",
+        "Sec-Fetch-Site": "same-origin",
+        "Sec-Fetch-User": "?1",
+        "Upgrade-Insecure-Requests": "1",
+        "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/147.0.0.0 Safari/537.36",
+        "sec-ch-ua": "\"Google Chrome\";v=\"147\", \"Not.A/Brand\";v=\"8\", \"Chromium\";v=\"147\"",
+        "sec-ch-ua-mobile": "?0",
+        "sec-ch-ua-platform": "\"Windows\"",
+        "cookie2": "__guard_trust=Mi41Ni4yNDEuMTA3fDE3NzcxMDc5NTZ8OTU5MDMyfDNkOTY2MTUwYzQwNjIzZTIwMDI0YTE5MzUxYjg2NTRk"
+      },
+      "start": "\"chapters\":[",
+      "end": "<div v-if=\"page_count >",
+      "next": "{\"i",
+      "link": {
+        "token1": "/download\\/",
+        "token2": "\"",
+        "replace": [
+          {
+            "match": "-",
+            "text": "/"
+          },
+          {
+            "prefix": "https://com-x.life/reader/"
+          }
+        ]
+      },
+      "title": {
+        "token1": "\"title\":\"",
+        "token2": "\""
+      }
+    }
+  },
+  "chapter_complete": {
+    "headers": {
+      "accept": "*/*",
+      "accept-language": "ru-RU,ru;q=0.9,en-US;q=0.8,en;q=0.7",
+      "cache-control": "max-age=0",
+      "priority": "u=0, i",
+      "referer": "https://comx.life/mm",
+      "sec-ch-ua": "\"Not)A;Brand\";v=\"8\", \"Chromium\";v=\"138\", \"Google Chrome\";v=\"138\"",
+      "sec-ch-ua-mobile": "?0",
+      "sec-ch-ua-platform": "\"Windows\"",
+      "sec-fetch-dest": "document",
+      "sec-fetch-mode": "navigate",
+      "sec-fetch-site": "same-origin",
+      "sec-fetch-user": "?1",
+      "upgrade-insecure-requests": "1",
+      "user-agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/138.0.0.0 Safari/537.36",
+      "cookie2": "__guard_token=MTg1LjIzLjkuMjE5fDE3NzQwMTA3NTN8MHw2MzA0MjN8NjcyOGZiMGM1NmRmM2VlOTIxYzA1ZjRkZDBjZmI0ZGE="
+    },
+    "add_numeration": true,
+    "add_images": {
+      "start": "\"images\":",
+      "token1": "[\"",
+      "token2": "\"]",
+      "split": "\",\"",
+      "end": "</html>",
+      "replace": [
+        {
+          "prefix": "https://img.com-x.life/comix/"
+        },
+        {
+          "match": "\\\\",
+          "text": ""
+        }
+      ]
+    }
+  },
+  "test": [
+    {
+      "proc": "manga_list_complete",
+      "assert": {
+        "mangas": [
+          {
+            "title": "The Man With No Name / Человек без имени",
+            "link": "https://com-x.life/8108-mwnn.html"
+          },
+          {
+            "link": "https://com-x.life/8055-project-patron-proekt-pokrovitel.html"
+          }
+        ],
+        "mangas_count": ">13200"
+      }
+    },
+    {
+      "proc": "manga_complete",
+      "link": "https://com-x.life/3482-batman-v3-read.html",
+      "title": "Batman Vol 3 / Бэтмен Том 3",
+      "assert": {
+        "author": "@DC Comics",
+        "cover": "https://com-x.life/uploads/posts/2016-07/1468399507_batman-2016-001-000.jpg",
+        "summary": "@^(В новом томе, уже за авторством Тома Кинга)",
+        "status": "ongoing",
+        "chapters_count": ">=100",
+        "chapters": [
+          {
+            "folder": "30985.html/",
+            "link": "https://com-x.life/readcomix/3482/30985.html",
+            "title": "# 1"
+          },
+          {
+            "link": "https://com-x.life/readcomix/3482/30986.html",
+            "title": "# 2"
+          }
+        ]
+      }
+    },
+    {
+      "proc": "chapter_complete",
+      "link": "https://com-x.life/readcomix/3482/30986.html",
+      "assert": {
+        "pages": [
+          {
+            "image": "https://img.com-x.life/comix/3482/30986/1472661638_0.15352300.jpg"
+          },
+          {
+            "image": "https://img.com-x.life/comix/3482/30986/1472661638_0.82009900.jpg"
+          },
+          {
+            "image": "https://img.com-x.life/comix/3482/30986/1472661639_0.48251900.jpg"
+          }
+        ]
+      }
+    }
+  ]
+}

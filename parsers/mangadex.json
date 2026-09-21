@@ -1,0 +1,904 @@
+{
+  "id": 30435,
+  "old_ids": [
+    20569
+  ],
+  "version": 27,
+  "title": "MangaDex",
+  "host": "https://api.mangadex.org/",
+  "public_link": "https://mangadex.org/",
+  "folder": "mangadex",
+  "name": "mangadex",
+  "language": "en",
+  "chapters_order": true,
+  "skip_catalog_test": false,
+  "icon_link": "https://raw.githubusercontent.com/veopot/mwx-json/main/img/mangadex.png",
+  "self_link": "https://raw.githubusercontent.com/veopot/mwx-json/main/parsers/mangadex.json",
+  "self_link2": "https://fant.my1.ru/mwparser/mwx/json/mangadex.json",
+  "catalog_link": "https://raw.githubusercontent.com/veopot/mwx-json/main/catalogs/mangadex.zip",
+  "file_type": "sqlite",
+  "author": {
+    "name": "Veopot & Lomik_XP",
+    "email": "fant-net@ya.ru"
+  },
+  "authorization_complete": {
+    "logo": "https://raw.githubusercontent.com/veopot/mwx-json/main/img/mangadex.png",
+    "registration": "https://mangadex.org/account/signup",
+    "expires": 31449600000,
+    "values": {
+      "username": {
+        "label": "Логин",
+        "hint": "Введите свой логин",
+        "kind": "text"
+      },
+      "password": {
+        "label": "Пароль",
+        "hint": "Введите свой пароль",
+        "kind": "password"
+      },
+      "headers": {
+        "Accept": "application/json, text/plain, */*"
+      }
+    },
+    "request": {
+      "method": "json",
+      "url": "https://api.mangadex.org/auth/login"
+    },
+    "response_check": {
+      "status": 200,
+      "body": "@\"token\"\\:(\\{.*?\\})",
+      "body_to_cookie": [
+        "refresh"
+      ]
+    }
+  },
+  "manga_search_complete": {
+    "search_link": "https://api.mangadex.org/manga?limit=100&offset=0&includes[]=cover_art&contentRating[]=safe&contentRating[]=suggestive&contentRating[]=erotica&title=$query$&order[relevance]=desc",
+    "query_type": "GET",
+    "add_manga": {
+      "start": "response",
+      "end": "total",
+      "next": "\"title\":{",
+      "title": {
+        "token1": "\"en\":\"",
+        "token2": "\""
+      },
+      "uniq": {
+        "before": "\"en\":\"",
+        "token1": "\"id\":\"",
+        "token2": "\""
+      },
+      "link": {
+        "before": "\"en\":\"",
+        "token1": "\"id\":\"",
+        "token2": "\"",
+        "replace": [
+          {
+            "prefix": "https://api.mangadex.org/manga/"
+          },
+          {
+            "sufix": "?includes[]=artist&includes[]=author&includes[]=cover_art&"
+          }
+        ]
+      },
+      "cover": {
+        "after": "cover_art\",",
+        "token1": "fileName\":\"",
+        "token2": "\"",
+        "replace": {
+          "prefix": "https://uploads.mangadex.org/covers/"
+        }
+      },
+      "add_tags": {
+        "start": "\"tags\":[",
+        "end": "createdAt",
+        "token1": "\"en\":\"",
+        "token2": "\"",
+        "replace": {
+          "match": "<.*?>",
+          "text": ""
+        }
+      },
+      "summary": {
+        "token1": "\"description\":{\"en\":\"",
+        "token2": "\"",
+        "replace": [
+          {
+            "match": "u003C",
+            "text": ""
+          },
+          {
+            "match": "<.*?>",
+            "text": ""
+          }
+        ]
+      }
+    }
+  },
+  "manga_list_complete": {
+    "headers": {},
+    "iterator": {
+      "base_url": "https://api.mangadex.org/manga?limit=32&includes[]=cover_art&contentRating[]=safe&contentRating[]=suggestive&contentRating[]=erotica&order[followedCount]=desc&offset=",
+      "append_nums": {
+        "from": 0,
+        "to": 10000,
+        "step": 32
+      }
+    },
+    "link_corrector": [
+      {
+        "match": "https://mangadex.org/title/(.*?)/(.*)",
+        "text": "https://api.mangadex.org/manga/$1?includes[]=artist&includes[]=author&includes[]=cover_art"
+      }
+    ],
+    "add_manga": {
+      "next": "\"title\":{",
+      "title": {
+        "token1": "\"en\":\"",
+        "token2": "\""
+      },
+      "uniq": {
+        "before": "\"en\":\"",
+        "token1": "\"id\":\"",
+        "token2": "\""
+      },
+      "link": {
+        "before": "\"en\":\"",
+        "token1": "\"id\":\"",
+        "token2": "\"",
+        "replace": [
+          {
+            "prefix": "https://api.mangadex.org/manga/"
+          },
+          {
+            "sufix": "?includes[]=artist&includes[]=author&includes[]=cover_art&"
+          }
+        ]
+      }
+    }
+  },
+  "manga_complete": {
+    "title": {
+      "after": "\"title\":{",
+      "token1": "\"en\":\"",
+      "token2": "\"",
+      "replace": [
+        {
+          "match": "u003Cp",
+          "text": ""
+        },
+        {
+          "match": "u003E",
+          "text": ""
+        },
+        {
+          "match": "u003C",
+          "text": ""
+        },
+        {
+          "match": "u0022",
+          "text": "'"
+        },
+        {
+          "match": "u0027",
+          "text": "'"
+        },
+        {
+          "match": "u002Fp",
+          "text": ""
+        },
+        {
+          "match": "u201c",
+          "text": "“"
+        },
+        {
+          "match": "u201d",
+          "text": "”"
+        },
+        {
+          "match": "u2019",
+          "text": "’"
+        },
+        {
+          "match": "u2026",
+          "text": "…"
+        },
+        {
+          "match": "u00e4",
+          "text": "ä"
+        },
+        {
+          "match": "\n",
+          "text": ""
+        },
+        {
+          "match": "<.*?>",
+          "text": ""
+        },
+        {
+          "match": "\"",
+          "text": "'"
+        },
+        {
+          "match": "\\\\",
+          "text": ""
+        },
+        {
+          "match": "&quot;",
+          "text": "'"
+        }
+      ]
+    },
+    "uniq": {
+      "after": "\"title\":{",
+      "token1": "\"en\":\"",
+      "token2": "\"",
+      "replace": [
+        {
+          "match": "u003Cp",
+          "text": ""
+        },
+        {
+          "match": "u003E",
+          "text": ""
+        },
+        {
+          "match": "u003C",
+          "text": ""
+        },
+        {
+          "match": "u0022",
+          "text": "'"
+        },
+        {
+          "match": "u0027",
+          "text": "'"
+        },
+        {
+          "match": "u002Fp",
+          "text": ""
+        },
+        {
+          "match": "u201c",
+          "text": "“"
+        },
+        {
+          "match": "u201d",
+          "text": "”"
+        },
+        {
+          "match": "u2019",
+          "text": "’"
+        },
+        {
+          "match": "u2026",
+          "text": "…"
+        },
+        {
+          "match": "u00e4",
+          "text": "ä"
+        },
+        {
+          "match": "\n",
+          "text": ""
+        },
+        {
+          "match": "<.*?>",
+          "text": ""
+        },
+        {
+          "match": "\"",
+          "text": "'"
+        },
+        {
+          "match": "\\\\",
+          "text": ""
+        },
+        {
+          "match": "&quot;",
+          "text": "'"
+        }
+      ]
+    },
+    "author": {
+      "skip": "type\":\"author\"",
+      "token1": "\"name\":\"",
+      "token2": "\""
+    },
+    "summary": {
+      "after": "\"description\":{",
+      "token1": "\"en\":\"",
+      "token2": "\"",
+      "replace": [
+        {
+          "match": "u003Cp",
+          "text": ""
+        },
+        {
+          "match": "u003E",
+          "text": ""
+        },
+        {
+          "match": "u003C",
+          "text": ""
+        },
+        {
+          "match": "u0022",
+          "text": "'"
+        },
+        {
+          "match": "u0027",
+          "text": "'"
+        },
+        {
+          "match": "u002Fp",
+          "text": ""
+        },
+        {
+          "match": "u201c",
+          "text": "“"
+        },
+        {
+          "match": "u201d",
+          "text": "”"
+        },
+        {
+          "match": "u2019",
+          "text": "’"
+        },
+        {
+          "match": "u2026",
+          "text": "…"
+        },
+        {
+          "match": "u00e4",
+          "text": "ä"
+        },
+        {
+          "match": "\n",
+          "text": ""
+        },
+        {
+          "match": "<.*?>",
+          "text": ""
+        },
+        {
+          "match": "\"",
+          "text": "'"
+        },
+        {
+          "match": "\\\\",
+          "text": ""
+        },
+        {
+          "match": "&quot;",
+          "text": "'"
+        }
+      ]
+    },
+    "status": {
+      "complete": "\"completed\",",
+      "ongoing": "\"ongoing\","
+    },
+    "cover": {
+      "after": "cover_art\",",
+      "token1": "fileName\":\"",
+      "token2": "\"",
+      "replace": {
+        "prefix": "https://uploads.mangadex.org/covers/%%page%%/"
+      }
+    },
+    "is_mature": {
+      "start": "\"tags\":[",
+      "end": "createdAt",
+      "values": [
+        "97893a4c-12af-4dac-b6be-0dffb353568e",
+        "5bd0e105-4481-44ca-b6e7-7544da56b1a3",
+        "5920b825-4181-4a17-beeb-9918b0ff7a30"
+      ]
+    },
+    "add_genres": {
+      "start": "\"tags\":[",
+      "end": "createdAt",
+      "token1": "\"en\":\"",
+      "token2": "\"",
+      "replace": [
+        {
+          "match": "u003Cp",
+          "text": ""
+        },
+        {
+          "match": "u003E",
+          "text": ""
+        },
+        {
+          "match": "u003C",
+          "text": ""
+        },
+        {
+          "match": "u0022",
+          "text": "'"
+        },
+        {
+          "match": "u0027",
+          "text": "'"
+        },
+        {
+          "match": "u002Fp",
+          "text": ""
+        },
+        {
+          "match": "u201c",
+          "text": "“"
+        },
+        {
+          "match": "u201d",
+          "text": "”"
+        },
+        {
+          "match": "u2019",
+          "text": "’"
+        },
+        {
+          "match": "u2026",
+          "text": "…"
+        },
+        {
+          "match": "u00e4",
+          "text": "ä"
+        },
+        {
+          "match": "\n",
+          "text": ""
+        },
+        {
+          "match": "<.*?>",
+          "text": ""
+        },
+        {
+          "match": "\"",
+          "text": "'"
+        },
+        {
+          "match": "\\\\",
+          "text": ""
+        },
+        {
+          "match": "&quot;",
+          "text": "'"
+        }
+      ]
+    },
+    "add_tags": {
+      "start": "\"tags\":[",
+      "end": "createdAt",
+      "token1": "\"en\":\"",
+      "token2": "\"",
+      "replace": [
+        {
+          "match": "u003Cp",
+          "text": ""
+        },
+        {
+          "match": "u003E",
+          "text": ""
+        },
+        {
+          "match": "u003C",
+          "text": ""
+        },
+        {
+          "match": "u0022",
+          "text": "'"
+        },
+        {
+          "match": "u0027",
+          "text": "'"
+        },
+        {
+          "match": "u002Fp",
+          "text": ""
+        },
+        {
+          "match": "u201c",
+          "text": "“"
+        },
+        {
+          "match": "u201d",
+          "text": "”"
+        },
+        {
+          "match": "u2019",
+          "text": "’"
+        },
+        {
+          "match": "u2026",
+          "text": "…"
+        },
+        {
+          "match": "u00e4",
+          "text": "ä"
+        },
+        {
+          "match": "\n",
+          "text": ""
+        },
+        {
+          "match": "<.*?>",
+          "text": ""
+        },
+        {
+          "match": "\"",
+          "text": "'"
+        },
+        {
+          "match": "\\\\",
+          "text": ""
+        },
+        {
+          "match": "&quot;",
+          "text": "'"
+        }
+      ]
+    },
+    "chapters_from_page": {
+      "after": "data\":{",
+      "token1": "\"id\":\"",
+      "token2": "\",",
+      "replace": [
+        {
+          "prefix": "https://api.mangadex.org/manga/"
+        },
+        {
+          "sufix": "/feed?limit=500&order[volume]=desc&order[chapter]=desc&contentRating[]=safe&contentRating[]=suggestive&contentRating[]=erotica&contentRating[]=pornographic&offset=%%iterator_num%%"
+        }
+      ],
+      "iterator": {
+        "base_url": "",
+        "append_nums": {
+          "from": 0,
+          "step": 500
+        }
+      }
+    },
+    "add_chapter": {
+      "start": "response",
+      "next": "type\":\"chapter\",",
+      "link": {
+        "before": "chapter\":",
+        "token1": "\"id\":\"",
+        "token2": "\",",
+        "replace": [
+          {
+            "sufix": "?forcePort443=false"
+          },
+          {
+            "prefix": "https://api.mangadex.org/at-home/server/"
+          }
+        ]
+      },
+      "title": {
+        "before": "chapter\":",
+        "token1": "\"attributes\":{",
+        "token2": "\"translatedLanguage\"",
+        "replace": [
+          {
+            "sufix": "Language %%chapter_lang%%"
+          },
+          {
+            "match": "\"hash\":\"(.*?)\",",
+            "text": ""
+          },
+          {
+            "match": "\"volume\":\"",
+            "text": "Volume "
+          },
+          {
+            "match": "\"volume\":null,",
+            "text": ""
+          },
+          {
+            "match": "\"chapter\":\"",
+            "text": "Chapter "
+          },
+          {
+            "match": "\"chapter\":null,",
+            "text": ""
+          },
+          {
+            "match": "\"title\":\"",
+            "text": " "
+          },
+          {
+            "match": "\"title\":null,",
+            "text": ""
+          },
+          {
+            "match": "\",",
+            "text": " "
+          }
+        ]
+      },
+      "lang": {
+        "token1": "translatedLanguage\":\"",
+        "token2": "\",",
+        "replace": [
+          {
+            "match": "\\ben\\b",
+            "text": "English"
+          },
+          {
+            "match": "\\bja\\b",
+            "text": "Japanese"
+          },
+          {
+            "match": "\\bpl\\b",
+            "text": "Polish"
+          },
+          {
+            "match": "\\bsh\\b",
+            "text": "SerboCroatian"
+          },
+          {
+            "match": "\\bnl\\b",
+            "text": "Dutch"
+          },
+          {
+            "match": "\\bit\\b",
+            "text": "Italian"
+          },
+          {
+            "match": "\\bru\\b",
+            "text": "Russian"
+          },
+          {
+            "match": "\\bde\\b",
+            "text": "German"
+          },
+          {
+            "match": "\\bhu\\b",
+            "text": "Hungarian"
+          },
+          {
+            "match": "\\bfr\\b",
+            "text": "French"
+          },
+          {
+            "match": "\\bfi\\b",
+            "text": "Finnish"
+          },
+          {
+            "match": "\\bvi\\b",
+            "text": "Vietnamese"
+          },
+          {
+            "match": "\\bel\\b",
+            "text": "Greek"
+          },
+          {
+            "match": "\\bbg\\b",
+            "text": "Bulgarian"
+          },
+          {
+            "match": "\\bes\\b",
+            "text": "SpanishSpain"
+          },
+          {
+            "match": "\\b(pt-BR|pt-br)\\b",
+            "text": "PortugueseBrazil"
+          },
+          {
+            "match": "\\bpt\\b",
+            "text": "PortuguesePortugal"
+          },
+          {
+            "match": "\\bsv\\b",
+            "text": "Swedish"
+          },
+          {
+            "match": "\\bar\\b",
+            "text": "Arabic"
+          },
+          {
+            "match": "\\bda\\b",
+            "text": "Danish"
+          },
+          {
+            "match": "\\b(zh-Hans|zh)\\b",
+            "text": "ChineseSimp"
+          },
+          {
+            "match": "\\bbn\\b",
+            "text": "Bengali"
+          },
+          {
+            "match": "\\bro\\b",
+            "text": "Romanian"
+          },
+          {
+            "match": "\\bcs\\b",
+            "text": "Czech"
+          },
+          {
+            "match": "\\bmn\\b",
+            "text": "Mongolian"
+          },
+          {
+            "match": "\\btr\\b",
+            "text": "Turkish"
+          },
+          {
+            "match": "\\bid\\b",
+            "text": "Indonesian"
+          },
+          {
+            "match": "\\bko\\b",
+            "text": "Korean"
+          },
+          {
+            "match": "\\b(es-419|es-la)\\b",
+            "text": "SpanishLTAM"
+          },
+          {
+            "match": "\\bfa\\b",
+            "text": "Persian"
+          },
+          {
+            "match": "\\bms\\b",
+            "text": "Malay"
+          },
+          {
+            "match": "\\bth\\b",
+            "text": "Thai"
+          },
+          {
+            "match": "\\bca\\b",
+            "text": "Catalan"
+          },
+          {
+            "match": "\\b(fil|tl)\\b",
+            "text": "Filipino"
+          },
+          {
+            "match": "\\b(zh-Hant|zh-hk)\\b",
+            "text": "ChineseTrad"
+          },
+          {
+            "match": "\\buk\\b",
+            "text": "Ukrainian"
+          },
+          {
+            "match": "\\bmy\\b",
+            "text": "Burmese"
+          },
+          {
+            "match": "\\blt\\b",
+            "text": "Lithuanian"
+          },
+          {
+            "match": "\\bhe\\b",
+            "text": "Hebrew"
+          },
+          {
+            "match": "\\bhi\\b",
+            "text": "Hindi"
+          },
+          {
+            "match": "\\bno\\b",
+            "text": "Norwegian"
+          }
+        ]
+      }
+    }
+  },
+  "chapter_complete": {
+    "images": true,
+    "use_servers_only": true,
+    "prefix": {
+      "after": "\"hash\"",
+      "token1": ":\"",
+      "token2": "\"",
+      "stop": ",",
+      "replace": [
+        {
+          "prefix": "https://uploads.mangadex.org/data/"
+        },
+        {
+          "sufix": "/"
+        }
+      ]
+    },
+    "add_pages": {
+      "start": "\"data\":",
+      "token1": "[\"",
+      "token2": "\"],",
+      "split": "\",\"",
+      "end": "],"
+    }
+  },
+  "test": [
+    {
+      "proc": "manga_list_complete",
+      "testpages": "3",
+      "assert": {
+        "mangas": [
+          {
+            "title": "@^(\\w+)",
+            "link": "@https:"
+          }
+        ],
+        "mangas_count": ">=50"
+      }
+    },
+    {
+      "proc": "manga_complete",
+      "link": "https://api.mangadex.org/manga/a1c7c817-4e59-43b7-9365-09675a149a6f?includes[]=artist&includes[]=author&includes[]=cover_art",
+      "title": "One Piece",
+      "assert": {
+        "additional_title": "Đảo Hải Tặc Wan Pīsu Ван Пис ون بيس ワンピース",
+        "author": "@Oda Eiichiro",
+        "cover": "@https://uploads.mangadex.org/covers/a1c7c817-4e59-43b7-9365-09675a149a6f/39df0d10-c9ea-416f-a3b5-7f56ef83e96a.jpg",
+        "summary": "@^(Gol D. Roger)",
+        "genres": "@comedy",
+        "status": "ongoing",
+        "genres_count": ">=5",
+        "chapters_count": ">=300",
+        "chapters": [
+          {
+            "title": "Ch. 893 - La 36TA Hija de la familia Charlotte - Flampe",
+            "link": "https://mangadex.org/chapter/281236",
+            "folder": "281236/"
+          },
+          {
+            "title": "Ch. 893 - La 36° Hija De La Familia Charlotte - Flampe",
+            "link": "https://mangadex.org/chapter/399008"
+          }
+        ]
+      }
+    },
+    {
+      "proc": "manga_complete",
+      "link": "https://mangadex.org/title/7643e9f6-8455-4a58-b7e8-bf6cd00f5251/tsuki-ga-michibiku-isekai-douchuu",
+      "title": "Killing Bites",
+      "assert": {
+        "additional_title": "キリングバイツ",
+        "author": "@Murata Shinya",
+        "cover": "@https://mangadex.org/images/manga/11199.jpg?\\.*",
+        "summary": "@^(People have been)",
+        "genres": "@comedy",
+        "status": "ongoing",
+        "genres_count": ">=8",
+        "chapters_count": ">=20",
+        "chapters": [
+          {
+            "folder": "cfcee10c-3425-4a2a-80b3-41ad4c32185e/",
+            "link": "https://api.mangadex.org/at-home/server/cfcee10c-3425-4a2a-80b3-41ad4c32185e?forcePort443=false",
+            "title": "Chapter 1038 Language %%chapter_lang%%"
+          },
+          {
+            "folder": "cd41b5de-16a7-43d4-ad61-37a6e9284798/",
+            "link": "https://api.mangadex.org/at-home/server/cd41b5de-16a7-43d4-ad61-37a6e9284798?forcePort443=false",
+            "title": "Chapter 1038 Language %%chapter_lang%%"
+          }
+        ]
+      }
+    },
+    {
+      "proc": "chapter_complete",
+      "link": "https://api.mangadex.org/at-home/server/c2391892-9677-4f0b-b84d-0ec979b23395?forcePort443=false",
+      "assert": {
+        "pages": [
+          {
+            "image": "https://uploads.mangadex.org/data/b5b25c64fe438b998cb29ebb499c5923/1-e9c4743014ea05fa3fc58587aba62ff38f325b23e6f8e256801c6994935c894a.jpg"
+          },
+          {
+            "image": "https://uploads.mangadex.org/data/b5b25c64fe438b998cb29ebb499c5923/2-1b874b0ca8286824e3456c7a7dadcd4e8439521ecba1363bdf76266c377acfec.jpg"
+          },
+          {
+            "image": "https://uploads.mangadex.org/data/b5b25c64fe438b998cb29ebb499c5923/3-164a12abfd99f6ec684240aafc08a869d110bc03a7a4a8eeb44767c6fef1a753.jpg"
+          }
+        ]
+      }
+    }
+  ]
+}

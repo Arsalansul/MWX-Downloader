@@ -1,0 +1,269 @@
+{
+  "id": 30008,
+  "version": 31,
+  "old_ids": [
+    2048
+  ],
+  "title": "Manga Fox",
+  "host": "http://fanfox.net/",
+  "public_link": "http://fanfox.net/directory/",
+  "folder": "mangafox",
+  "name": "mf",
+  "language": "en",
+  "chapters_order": false,
+  "skip_catalog_test": false,
+  "icon_link": "https://raw.githubusercontent.com/veopot/mwx-json/main/img/mangafox.png",
+  "self_link": "https://raw.githubusercontent.com/veopot/mwx-json/main/parsers/mangafox.json",
+  "self_link2": "https://fant.my1.ru/mwparser/mwx/json/mangafox.json",
+  "catalog_link": "https://raw.githubusercontent.com/veopot/mwx-json/main/catalogs/mangafox.zip",
+  "file_type": "sqlite",
+  "engine_settings": {
+    "skip_chapter_parsing_on_update": true
+  },
+  "manga_search_complete": {
+    "headers": {
+      "Referer": "https://fanfox.net/",
+      "Set-Cookie": "isAdult=1"
+    },
+    "search_link": "http://fanfox.net/search?page=$page$&title=$query$&genres&nogenres&sort&stype=1&name&type=0&author_method=cw&author&artist_method=cw&artist&rating_method=eq&rating&released_method=eq&released&st=0#searchlt",
+    "query_type": "GET",
+    "add_manga": {
+      "start": "class=\"line-list\">",
+      "end": "</div>",
+      "next": "class=\"manga-list-4-item-title\">",
+      "title": {
+        "skip": "href=\"",
+        "token1": "title=\"",
+        "token2": "\""
+      },
+      "link": {
+        "token1": "href=\"",
+        "token2": "\""
+      },
+      "summary": {
+        "skip": "href=\"/manga/",
+        "token1": "title=\"",
+        "token2": "\""
+      },
+      "cover": {
+        "before": "href=\"",
+        "token1": "src=\"",
+        "token2": "\""
+      }
+    }
+  },
+  "manga_list_complete": {
+    "headers": {
+      "Referer": "https://fanfox.net/",
+      "Set-Cookie": "isAdult=1"
+    },
+    "iterator": {
+      "base_url": "http://fanfox.net/directory/",
+      "append_nums": {
+        "from": 1,
+        "to": 325,
+        "step": 1,
+        "sufix": ".html"
+      }
+    },
+    "add_manga": {
+      "start": "manga-list-1-list",
+      "next": "<li>",
+      "link": {
+        "token1": "href=\"",
+        "token2": "\""
+      },
+      "title": {
+        "token1": "title=\"",
+        "token2": "\""
+      },
+      "cover": {
+        "token1": "src=\"",
+        "token2": "\""
+      }
+    },
+    "rating_auto_inc": {
+      "start": "30000",
+      "inc": -1
+    }
+  },
+  "manga_complete": {
+    "headers": {
+      "Referer": "https://fanfox.net/",
+      "Set-Cookie": "isAdult=1"
+    },
+    "title": {
+      "after": "detail-info-right-title-font",
+      "token1": ">",
+      "token2": "<"
+    },
+    "uniq": {
+      "after": "detail-info-right-title-font",
+      "token1": ">",
+      "token2": "<"
+    },
+    "author": {
+      "after": ">Author:",
+      "token1": "title=\"",
+      "token2": "\""
+    },
+    "summary": {
+      "token1": "detail-info-right-content\">",
+      "token2": "<p class"
+    },
+    "status": {
+      "complete": ">Completed<",
+      "ongoing": ">Ongoing<",
+      "licensed": "has been licensed, it is not available"
+    },
+    "read_dir": {
+      "right_to_left": "Manga</h1>",
+      "left_to_right": "Manhwa</h1>"
+    },
+    "cover": {
+      "after": "detail-info-cover-img",
+      "token1": "src=\"",
+      "token2": "\""
+    },
+    "add_genres": {
+      "start": "detail-info-right-tag-list",
+      "after": "href=\"/directory/",
+      "token1": ">",
+      "token2": "</",
+      "end": "</p>"
+    },
+    "chapters_from_page": {
+      "after": "class=\"detail-info-right-read\"",
+      "token1": "href=\"",
+      "token2": "\"",
+      "replace": {
+        "prefix": "http://fanfox.net"
+      }
+    },
+    "add_chapter": {
+      "headers": {
+        "Referer": "https://fanfox.net/",
+        "Set-Cookie": "isAdult=1"
+      },
+      "start": "class=\"reader-header-title-list\"",
+      "end": "</div>",
+      "next": "<a",
+      "link": {
+        "token1": "href=\"/manga/",
+        "token2": "\"",
+        "replace": {
+          "prefix": "http://m.fanfox.net/manga/"
+        }
+      },
+      "uniq": {
+        "after": "href=\"/manga/",
+        "token1": ">",
+        "token2": "</"
+      },
+      "title": {
+        "after": "href=\"/manga/",
+        "token1": ">",
+        "token2": "</"
+      }
+    }
+  },
+  "chapter_complete": {
+    "headers": {
+      "Referer": "https://fanfox.net/",
+      "Set-Cookie": "isAdult=1"
+    },
+    "add_pages": {
+      "start": "<select class=\"mangaread-page\"",
+      "token1": "value=\"//",
+      "token2": "\"",
+      "end": "</select>"
+    },
+    "prefix": "http://"
+  },
+  "page_complete": {
+    "headers": {
+      "Referer": "https://fanfox.net/",
+      "Set-Cookie": "isAdult=1"
+    },
+    "image": {
+      "skip": "class=\"mangaread-img\"",
+      "token1": "src=\"//",
+      "token2": "\"",
+      "replace": {
+        "prefix": "http://"
+      }
+    }
+  },
+  "test": [
+    {
+      "proc": "manga_list_complete",
+      "assert": {
+        "mangas": [
+          {
+            "title": "Tales of Demons and Gods",
+            "link": "http://fanfox.net/manga/tales_of_demons_and_gods/",
+            "uniq": "tales_of_demons_and_gods"
+          },
+          {
+            "title": "Goblin Slayer",
+            "link": "http://fanfox.net/manga/goblin_slayer/"
+          }
+        ],
+        "mangas_count": ">13200"
+      }
+    },
+    {
+      "proc": "manga_complete",
+      "link": "http://fanfox.net/manga/fairy_tail/",
+      "title": "Fairy Tail",
+      "assert": {
+        "cover": "@http://fmcdn.mfcdn.net/store/manga/246/cover.jpg?\\.*",
+        "summary": "@^(A young celestial mage)",
+        "author": "MASHIMA Hiro",
+        "genres": "@comedy",
+        "status": "complete",
+        "genres_count": ">5",
+        "chapters_count": ">=300",
+        "chapters": [
+          {
+            "folder": "Vol.62 Ch.544 You're the King/",
+            "link": "http://m.fanfox.net/manga/fairy_tail/v62/c544/1.html",
+            "title": "Vol.62 Ch.544 You're the King"
+          },
+          {
+            "folder": "Vol.62 Ch.543 Hearts As One/",
+            "link": "http://m.fanfox.net/manga/fairy_tail/v62/c543/1.html",
+            "title": "Vol.62 Ch.543 Hearts As One"
+          }
+        ]
+      }
+    },
+    {
+      "proc": "chapter_complete",
+      "link": "http://m.fanfox.net/manga/fairy_tail/v62/c544/1.html",
+      "assert": {
+        "pages": [
+          {
+            "link": "http://m.fanfox.net/manga/fairy_tail/v62/c544/1.html"
+          },
+          {
+            "link": "http://m.fanfox.net/manga/fairy_tail/v62/c544/2.html"
+          },
+          {
+            "link": "http://m.fanfox.net/manga/fairy_tail/v62/c544/3.html"
+          },
+          {
+            "link": "http://m.fanfox.net/manga/fairy_tail/v62/c544/4.html"
+          }
+        ]
+      }
+    },
+    {
+      "proc": "page_complete",
+      "link": "http://m.fanfox.net/manga/fairy_tail/v62/c544/4.html",
+      "assert": {
+        "image": "@http://zjcdn.mangafox.me/store/manga/246/62-544.0/compressed/ifairy-tail-9527437.jpg?\\.*"
+      }
+    }
+  ]
+}

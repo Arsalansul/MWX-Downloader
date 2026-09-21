@@ -1,0 +1,380 @@
+{
+  "id": 40259,
+  "version": 5,
+  "title": "RanobeHub",
+  "host": "https://ranobehub.org",
+  "public_link": "https://ranobehub.org",
+  "folder": "ranobehub",
+  "name": "ranobehub",
+  "language": "ru",
+  "encoding": "utf-8",
+  "chapters_order": true,
+  "icon_link": "https://raw.githubusercontent.com/veopot/mwx-json/main/img/ranobehub.png",
+  "self_link": "https://raw.githubusercontent.com/veopot/mwx-json/main/parsers/ranobehub.json",
+  "self_link2": "https://fant.my1.ru/mwparser/mwx/json/ranobehub.json",
+  "catalog_link": "https://raw.githubusercontent.com/veopot/mwx-json/main/catalogs/ranobehub.zip",
+  "file_type": "sqlite",
+  "author": {
+    "name": "MWX and Hikkun",
+    "email": "fant-net@ya.ru"
+  },
+  "manga_search_complete": {
+    "headers": {},
+    "search_link": "https://ranobehub.org/api/search?q=$query$",
+    "query_type": "GET",
+    "add_manga": {
+      "start": "\"books\"",
+      "end": "\"entities\"",
+      "next": "{\"id\"",
+      "title": {
+        "token1": "\"title\":\"",
+        "token2": "\""
+      },
+      "link": {
+        "before": "\"title\":\"",
+        "token1": "id\":",
+        "token2": "\",",
+        "replace": [
+          {
+            "match": ",\"slug\":\"",
+            "text": "-"
+          },
+          {
+            "prefix": "https://ranobehub.org/ranobe/"
+          }
+        ]
+      },
+      "uniq": {
+        "token1": "\"slug\":\"",
+        "token2": "\"",
+        "replace": {
+          "match": "\\\\",
+          "text": ""
+        }
+      },
+      "cover": {
+        "token1": "\"posterUrl\":\"",
+        "token2": "\"",
+        "replace": {
+          "prefix": "https://ranobehub.org"
+        }
+      },
+      "summary": {
+        "token1": "\"description\":\"",
+        "token2": "\",",
+        "replace": [
+          {
+            "match": "<div class=\"FicTable_Genres\">",
+            "text": "&nbsp;&nbsp;"
+          },
+          {
+            "match": "<.*?>",
+            "text": ""
+          }
+        ]
+      }
+    }
+  },
+  "manga_list_complete": {
+    "headers": {},
+    "iterator": {
+      "base_url": "https://ranobehub.org/api/catalog?sort=popular&page=",
+      "append_nums": {
+        "from": 1,
+        "to": 131,
+        "step": 1
+      }
+    },
+    "add_manga": {
+      "next": "{\"id\"",
+      "title": {
+        "token1": "\"title\":\"",
+        "token2": "\""
+      },
+      "link": {
+        "before": "\"title\":\"",
+        "token1": "id\":",
+        "token2": "\",",
+        "replace": [
+          {
+            "match": ",\"slug\":\"",
+            "text": "-"
+          },
+          {
+            "prefix": "https://ranobehub.org/ranobe/"
+          }
+        ]
+      },
+      "uniq": {
+        "token1": "\"slug\":\"",
+        "token2": "\"",
+        "replace": {
+          "match": "\\\\",
+          "text": ""
+        }
+      }
+    }
+  },
+  "manga_complete": {
+    "content_type": {
+      "default": "light_novels"
+    },
+    "title": {
+      "skip": "property=\"og:title\"",
+      "token1": "content=\"",
+      "token2": "\"",
+      "replace": [
+        {
+          "clear_escape": true
+        },
+        {
+          "match": "–",
+          "text": "-"
+        },
+        {
+          "match": "%2F",
+          "text": "/"
+        },
+        {
+          "match": "%3F",
+          "text": "?"
+        },
+        {
+          "match": "%3D",
+          "text": "="
+        },
+        {
+          "match": "%26",
+          "text": "&"
+        },
+        {
+          "match": "Ранобэ",
+          "text": ""
+        },
+        {
+          "match": "<.*?>",
+          "text": "&"
+        }
+      ]
+    },
+    "uniq": {
+      "after": "[[\"book\",\"",
+      "token1": ",\"",
+      "token2": "\""
+    },
+    "cover": {
+      "after": "posters\\\":[{\\\"id\\\":",
+      "token1": "\\\"url\\\":\\\"",
+      "token2": "\\\",",
+      "replace": [
+        {
+          "match": "%2F",
+          "text": "/"
+        },
+        {
+          "match": "%3F",
+          "text": "?"
+        },
+        {
+          "match": "%3D",
+          "text": "="
+        },
+        {
+          "match": "%26",
+          "text": "&"
+        },
+        {
+          "match": "\\\\u0026",
+          "text": "&"
+        },
+        {
+          "match": "<.*?>",
+          "text": "&"
+        },
+        {
+          "prefix": "https://ranobehub.org"
+        }
+      ]
+    },
+    "author": {
+      "after": "href=\"/author/",
+      "token1": "\">",
+      "token2": "</div>",
+      "replace": [
+        {
+          "match": "</span></span>",
+          "text": " "
+        },
+        {
+          "match": "<.*?>",
+          "text": ""
+        }
+      ]
+    },
+    "summary": {
+      "after": "<meta name=\"description\"",
+      "token1": "content=\"",
+      "token2": "\"/>",
+      "replace": {
+        "match": "<.*?>",
+        "text": " "
+      }
+    },
+    "status": {
+      "complete": "status=2\">Завершено</a>",
+      "ongoing": "status=1\">В процессе</a>",
+      "unknown": "status=3\">Заморожено</a>"
+    },
+    "add_tag": {
+      "after": "href=\"/tag/",
+      "token1": "\">",
+      "token2": "</a>"
+    },
+    "is_mature": {
+      "values": [
+        "Для взрослых",
+        ">место для рекламы<",
+        ">место для рекламы<",
+        ">место для рекламы<"
+      ]
+    },
+    "chapters_from_page": {
+      "token1": "aria-current=\"page\" data-book-transition-id=\"",
+      "token2": "\"",
+      "replace": [
+        {
+          "prefix": "https://ranobehub.org/api/books/"
+        },
+        {
+          "sufix": "/chapters?limit=250&offset=%%iterator_num%%"
+        }
+      ],
+      "iterator": {
+        "base_url": "",
+        "append_nums": {
+          "from": 0,
+          "step": 250
+        }
+      }
+    },
+    "add_chapter": {
+      "start": "\"items\"",
+      "next": "\"id\":",
+      "link": {
+        "before": "\"bookId\"",
+        "token1": "id\":",
+        "token2": ",",
+        "replace": {
+          "prefix": "https://ranobehub.org/api/chapters/"
+        }
+      },
+      "uniq": {
+        "token1": "\"vol",
+        "token2": ",\"title\"",
+        "replace": [
+          {
+            "match": "ume\":",
+            "text": "Том "
+          },
+          {
+            "match": ",\"number\":",
+            "text": " Глава "
+          },
+          {
+            "match": "\\\\",
+            "text": ""
+          }
+        ]
+      },
+      "title": {
+        "token1": "\"vol",
+        "token2": "\",\"hasImages\"",
+        "replace": [
+          {
+            "match": "ume\":",
+            "text": "Том "
+          },
+          {
+            "match": ",\"number\":",
+            "text": " Глава "
+          },
+          {
+            "match": ",\"title\":\"",
+            "text": " "
+          },
+          {
+            "match": "\\\\",
+            "text": ""
+          }
+        ]
+      }
+    }
+  },
+  "chapter_complete": {
+    "headers": {},
+    "add_images": {
+      "start": "\"chapter\"",
+      "token1": "\"id\":",
+      "token2": ",",
+      "end": "\"title\"",
+      "replace": [
+        {
+          "prefix": "https://bypass.mwx.su/api/ranobe/download/?href=https://ranobehub.org/api/chapters/"
+        },
+        {
+          "sufix": "&title=/ranobehub.fb2"
+        }
+      ]
+    }
+  },
+  "test": [
+    {
+      "proc": "manga_list_complete",
+      "assert": {
+        "mangas": [
+          {
+            "title": "Город Ведьм",
+            "link": "https://ranobehub.org/ranobe/1286-manyeoui-dosi",
+            "uniq": "1286-manyeoui-dosi"
+          }
+        ],
+        "mangas_count": ">=10"
+      }
+    },
+    {
+      "proc": "manga_complete",
+      "link": "https://ranobehub.org/ranobe/80-i-shall-seal-the-heavens",
+      "title": "Я Запечатаю Небеса",
+      "assert": {
+        "author": "EG Er Gen耳 耳根M momo",
+        "cover": "@https://ranobehub.org/api/media/2359?v=5&size=big",
+        "summary": "@^(Эта история берет начало)",
+        "status": "unknown",
+        "chapters_count": ">=1000",
+        "chapters": [
+          {
+            "link": "https://ranobehub.org/api/chapters/168878",
+            "title": "Том 1 Глава 1617 Другая история 3. Попугай и холодeц"
+          },
+          {
+            "folder": "Том 1 Глава 1616\\",
+            "link": "https://ranobehub.org/api/chapters/168877",
+            "title": "Том 1 Глава 1616 Другая история 2. Чу Юйянь"
+          }
+        ]
+      }
+    },
+    {
+      "proc": "chapter_complete",
+      "link": "https://ranobehub.org/api/chapters/168877",
+      "assert": {
+        "pages": [
+          {
+            "image": "http://bypass.mwx.su/api/ranobehub/download/?href=https://ranobehub.org/ranobehub24/5908"
+          }
+        ],
+        "pages_count": "1"
+      }
+    }
+  ]
+}

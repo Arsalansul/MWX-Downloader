@@ -1,0 +1,1834 @@
+{
+  "checked_at": "2026-09-08T12:28:30.246312+00:00",
+  "count": 78,
+  "results": [
+    {
+      "parser": "acomics",
+      "source": "acomics",
+      "title": "AComics",
+      "host": "https://acomics.ru/",
+      "stages": {
+        "catalog": {
+          "status": "parser",
+          "error": "acomics: каталог вернул 0 тайтлов; правило устарело или сайт заблокировал запрос",
+          "seconds": 0.34
+        },
+        "title": {
+          "status": "parser",
+          "error": "acomics: главы не найдены; возможно, источник требует адаптер",
+          "seconds": 0.33
+        },
+        "chapter": {
+          "status": "parser",
+          "error": "acomics: изображения главы не найдены",
+          "seconds": 0.33
+        }
+      },
+      "overall": "broken_parser"
+    },
+    {
+      "parser": "allhentai",
+      "source": "allhentai",
+      "title": "All Hentai",
+      "host": "https://20.allhen.online",
+      "stages": {
+        "catalog": {
+          "status": "ok",
+          "count": 50,
+          "seconds": 1.28
+        },
+        "title": {
+          "status": "ok",
+          "count": null,
+          "seconds": 1.16
+        },
+        "chapter": {
+          "status": "error",
+          "error": "HTTP 404: https://20.allhen.online/tetrad_po_trusikam/vol1/95?d=Mjc2ODk",
+          "seconds": 0.7
+        }
+      },
+      "overall": "partial"
+    },
+    {
+      "parser": "baozimh",
+      "source": "baozimh",
+      "title": "包子漫畫",
+      "host": "https://www.baozimh.com",
+      "stages": {
+        "catalog": {
+          "status": "ok",
+          "count": 50,
+          "seconds": 2.01
+        },
+        "title": {
+          "status": "ok",
+          "count": null,
+          "seconds": 6.39
+        },
+        "chapter": {
+          "status": "ok",
+          "count": 15,
+          "seconds": 4.39
+        }
+      },
+      "overall": "working"
+    },
+    {
+      "parser": "com-x",
+      "source": "comxlife",
+      "title": "Com-X.life (unstable)",
+      "host": "https://com-x.life/",
+      "stages": {
+        "catalog": {
+          "status": "error",
+          "error": "HTTP 404: https://com-x.life/comix-read/page/1/",
+          "seconds": 2.19
+        },
+        "title": {
+          "status": "error",
+          "error": "HTTP 404: https://com-x.life/3482-batman-v3-read.html",
+          "seconds": 1.34
+        },
+        "chapter": {
+          "status": "error",
+          "error": "HTTP 404: https://com-x.life/readcomix/3482/30986.html",
+          "seconds": 1.72
+        }
+      },
+      "overall": "broken_parser"
+    },
+    {
+      "parser": "comicastle",
+      "source": "comicastle",
+      "title": "Comicastle",
+      "host": "https://www.comic.nizamkomputer.com/",
+      "stages": {
+        "catalog": {
+          "status": "blocked",
+          "error": "Ошибка сети для https://www.comic.nizamkomputer.com/library/popular/desc/index/0: [SSL: UNEXPECTED_EOF_WHILE_READING] EOF occurred in violation of protocol (_ssl.c:1010)",
+          "seconds": 1.7
+        },
+        "title": {
+          "status": "blocked",
+          "error": "Ошибка сети для https://www.comic.nizamkomputer.com/home/detail/278/venom-vol-4: [SSL: UNEXPECTED_EOF_WHILE_READING] EOF occurred in violation of protocol (_ssl.c:1010)",
+          "seconds": 1.59
+        },
+        "chapter": {
+          "status": "blocked",
+          "error": "Ошибка сети для https://www.comic.nizamkomputer.com/read/pbp/2488/278/venom-vol-4/1: [SSL: UNEXPECTED_EOF_WHILE_READING] EOF occurred in violation of protocol (_ssl.c:1010)",
+          "seconds": 1.61
+        }
+      },
+      "overall": "blocked_or_unavailable"
+    },
+    {
+      "parser": "comixbook",
+      "source": "['comixbook']",
+      "title": "ComixBook",
+      "host": "https://comixbook.ru/",
+      "stages": {
+        "catalog": {
+          "status": "parser",
+          "error": "['comixbook']: каталог вернул 0 тайтлов; правило устарело или сайт заблокировал запрос",
+          "seconds": 0.62
+        },
+        "title": {
+          "status": "parser",
+          "error": "['comixbook']: главы не найдены; возможно, источник требует адаптер",
+          "seconds": 0.69
+        },
+        "chapter": {
+          "status": "parser",
+          "error": "['comixbook']: изображения главы не найдены",
+          "seconds": 0.73
+        }
+      },
+      "overall": "broken_parser"
+    },
+    {
+      "parser": "desu",
+      "source": "desu",
+      "title": "desu",
+      "host": "",
+      "overall": "broken_parser",
+      "stages": {
+        "config": {
+          "status": "parser",
+          "error": "Некорректный JSON E:\\mwx-json\\parsers\\desu.json: Expecting property name enclosed in double quotes: line 70 column 75 (char 1815)"
+        }
+      }
+    },
+    {
+      "parser": "desu-kh",
+      "source": "desu",
+      "title": "Desu (KH)",
+      "host": "https://desu.win/",
+      "stages": {
+        "catalog": {
+          "status": "blocked",
+          "error": "Ошибка сети для https://desu.win/manga/api/?limit=30&order=popular&page=1: [SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: unable to get local issuer certificate (_ssl.c:1010)",
+          "seconds": 0.81
+        },
+        "title": {
+          "status": "blocked",
+          "error": "Ошибка сети для https://desu.win/manga/api/z-fairy-tail.10/: [SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: unable to get local issuer certificate (_ssl.c:1010)",
+          "seconds": 0.7
+        },
+        "chapter": {
+          "status": "blocked",
+          "error": "Ошибка сети для https://desu.win/manga/api/z-fairy-tail.10/chapter/37975: [SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: unable to get local issuer certificate (_ssl.c:1010)",
+          "seconds": 0.8
+        }
+      },
+      "overall": "blocked_or_unavailable"
+    },
+    {
+      "parser": "erolate",
+      "source": "erolate",
+      "title": "EroLate (DEAD)",
+      "host": "https://erolate.com",
+      "stages": {
+        "catalog": {
+          "status": "unavailable",
+          "error": "The read operation timed out",
+          "seconds": 10.55
+        },
+        "title": {
+          "status": "unavailable",
+          "error": "The read operation timed out",
+          "seconds": 10.45
+        },
+        "chapter": {
+          "status": "unavailable",
+          "error": "The read operation timed out",
+          "seconds": 10.5
+        }
+      },
+      "overall": "blocked_or_unavailable"
+    },
+    {
+      "parser": "flamescans",
+      "source": "flamescans",
+      "title": "flamescans",
+      "host": "",
+      "overall": "broken_parser",
+      "stages": {
+        "config": {
+          "status": "parser",
+          "error": "Некорректный JSON E:\\mwx-json\\parsers\\flamescans.json: Expecting property name enclosed in double quotes: line 39 column 13 (char 1151)"
+        }
+      }
+    },
+    {
+      "parser": "flamescans-fr",
+      "source": "flamescans-fr",
+      "title": "Flame Scans FR(dead)",
+      "host": "https://flamescans.fr/",
+      "stages": {
+        "catalog": {
+          "status": "blocked",
+          "error": "Ошибка сети для https://flamescans.fr/manga/list-mode/: [SSL: UNEXPECTED_EOF_WHILE_READING] EOF occurred in violation of protocol (_ssl.c:1010)",
+          "seconds": 2.77
+        },
+        "title": {
+          "status": "blocked",
+          "error": "Ошибка сети для https://flamescans.fr/manga/swordmasters-youngest-son/: [SSL: UNEXPECTED_EOF_WHILE_READING] EOF occurred in violation of protocol (_ssl.c:1010)",
+          "seconds": 2.39
+        },
+        "chapter": {
+          "status": "blocked",
+          "error": "Ошибка сети для https://flamescans.fr/swordmasters-youngest-son-chapitre-1/: [SSL: UNEXPECTED_EOF_WHILE_READING] EOF occurred in violation of protocol (_ssl.c:1010)",
+          "seconds": 2.62
+        }
+      },
+      "overall": "blocked_or_unavailable"
+    },
+    {
+      "parser": "flibusta",
+      "source": "flibusta",
+      "title": "Flibusta (Книги)",
+      "host": "http://b.flibusta.is/",
+      "stages": {
+        "catalog": {
+          "status": "ok",
+          "count": 4909,
+          "seconds": 1.52
+        },
+        "title": {
+          "status": "parser",
+          "error": "flibusta: главы не найдены; возможно, источник требует адаптер",
+          "seconds": 0.83
+        },
+        "chapter": {
+          "status": "ok",
+          "count": 1,
+          "seconds": 1.03
+        }
+      },
+      "overall": "partial"
+    },
+    {
+      "parser": "funmanga",
+      "source": "funmanga",
+      "title": "Funmanga (Dead)",
+      "host": "https://www.funmanga.com/",
+      "stages": {
+        "catalog": {
+          "status": "blocked",
+          "error": "Ошибка сети для https://www.funmanga.com/manga-list/#: _ssl.c:993: The handshake operation timed out",
+          "seconds": 10.03
+        },
+        "title": {
+          "status": "blocked",
+          "error": "Ошибка сети для https://www.funmanga.com/Tales-of-Demons-and-Gods: _ssl.c:993: The handshake operation timed out",
+          "seconds": 10.03
+        },
+        "chapter": {
+          "status": "blocked",
+          "error": "Ошибка сети для https://www.funmanga.com/Tales-of-Demons-and-Gods/315: _ssl.c:993: The handshake operation timed out",
+          "seconds": 10.02
+        }
+      },
+      "overall": "blocked_or_unavailable"
+    },
+    {
+      "parser": "hentai2read",
+      "source": "hentai2read",
+      "title": "Hentai2Read",
+      "host": "https://hentai2read.com/",
+      "stages": {
+        "catalog": {
+          "status": "ok",
+          "count": 47,
+          "seconds": 3.67
+        },
+        "title": {
+          "status": "ok",
+          "count": null,
+          "seconds": 2.7
+        },
+        "chapter": {
+          "status": "ok",
+          "count": 26,
+          "seconds": 1.56
+        }
+      },
+      "overall": "working"
+    },
+    {
+      "parser": "hentaichan",
+      "source": "hentaichan",
+      "title": "Хентай-тян",
+      "host": "https://x9.h-chan.me",
+      "stages": {
+        "catalog": {
+          "status": "error",
+          "error": "HTTP 404: https://x9.h-chan.me/manga/new&n=favdesc?offset=0",
+          "seconds": 0.66
+        },
+        "title": {
+          "status": "unavailable",
+          "error": "The read operation timed out",
+          "seconds": 10.44
+        },
+        "chapter": {
+          "status": "ok",
+          "count": 33,
+          "seconds": 1.19
+        }
+      },
+      "overall": "blocked_or_unavailable"
+    },
+    {
+      "parser": "hentailib",
+      "source": "hentailib",
+      "title": "HentaiLib",
+      "host": "https://hentailib.me/",
+      "stages": {
+        "catalog": {
+          "status": "parser",
+          "error": "hentailib: каталог вернул 0 тайтлов; правило устарело или сайт заблокировал запрос",
+          "seconds": 1.0
+        },
+        "title": {
+          "status": "ok",
+          "count": null,
+          "seconds": 1.53
+        },
+        "chapter": {
+          "status": "error",
+          "error": "HTTP 404: https://hapi.hentaicdn.org/api/manga/77395--imaizumin-chi-wa-douyara-gal-no-tamariba-ni-natteru-rashii-s/chapter?number=5.5&volume=1",
+          "seconds": 0.7
+        }
+      },
+      "overall": "partial"
+    },
+    {
+      "parser": "kissmanga",
+      "source": "['kissmg']",
+      "title": "KissManga",
+      "host": "https://kissmanga.org/",
+      "stages": {
+        "catalog": {
+          "status": "unavailable",
+          "error": "The read operation timed out",
+          "seconds": 10.56
+        },
+        "title": {
+          "status": "unavailable",
+          "error": "The read operation timed out",
+          "seconds": 10.47
+        },
+        "chapter": {
+          "status": "unavailable",
+          "error": "The read operation timed out",
+          "seconds": 10.59
+        }
+      },
+      "overall": "blocked_or_unavailable"
+    },
+    {
+      "parser": "komikstation",
+      "source": "komikstation",
+      "title": "komikstation",
+      "host": "",
+      "overall": "broken_parser",
+      "stages": {
+        "config": {
+          "status": "parser",
+          "error": "Некорректный JSON E:\\mwx-json\\parsers\\komikstation.json: Expecting value: line 142 column 5 (char 4475)"
+        }
+      }
+    },
+    {
+      "parser": "librebook",
+      "source": "librebook",
+      "title": "LibreBook (Книги, Test)",
+      "host": "https://1.librebook.me/",
+      "stages": {
+        "catalog": {
+          "status": "ok",
+          "count": 50,
+          "seconds": 1.17
+        },
+        "title": {
+          "status": "ok",
+          "count": null,
+          "seconds": 1.94
+        },
+        "chapter": {
+          "status": "error",
+          "error": "HTTP 404: https://1.librebook.me/povelitel_tain/vol1/1?d=MzEzNzY3NA",
+          "seconds": 1.42
+        }
+      },
+      "overall": "partial"
+    },
+    {
+      "parser": "manga-ovh",
+      "source": "manga-ovh",
+      "title": "Manga Ovh",
+      "host": "https://manga.ovh/",
+      "stages": {
+        "catalog": {
+          "status": "blocked",
+          "error": "Ошибка сети для https://api.manga.ovh/book?sort=createdAt&size=40&page=00: [SSL: UNEXPECTED_EOF_WHILE_READING] EOF occurred in violation of protocol (_ssl.c:1010)",
+          "seconds": 1.56
+        },
+        "title": {
+          "status": "blocked",
+          "error": "Ошибка сети для https://api.manga.ovh/i-am-the-only-level-up: [SSL: UNEXPECTED_EOF_WHILE_READING] EOF occurred in violation of protocol (_ssl.c:1010)",
+          "seconds": 1.67
+        },
+        "chapter": {
+          "status": "blocked",
+          "error": "Ошибка сети для https://api.manga.ovh/chapter/17a4cc77-69cf-42eb-9552-aae69e43286d: [SSL: UNEXPECTED_EOF_WHILE_READING] EOF occurred in violation of protocol (_ssl.c:1010)",
+          "seconds": 1.56
+        }
+      },
+      "overall": "blocked_or_unavailable"
+    },
+    {
+      "parser": "manga-shi",
+      "source": "manga-shi",
+      "title": "Manga-shi",
+      "host": "https://manga-shi.org",
+      "stages": {
+        "catalog": {
+          "status": "parser",
+          "error": "manga-shi: каталог вернул 0 тайтлов; правило устарело или сайт заблокировал запрос",
+          "seconds": 1.69
+        },
+        "title": {
+          "status": "ok",
+          "count": null,
+          "seconds": 2.66
+        },
+        "chapter": {
+          "status": "ok",
+          "count": 18,
+          "seconds": 1.0
+        }
+      },
+      "overall": "partial"
+    },
+    {
+      "parser": "manga-tube",
+      "source": "['mt', 'tube']",
+      "title": "Manga-Tube",
+      "host": "https://manga-tube.me/",
+      "stages": {
+        "catalog": {
+          "status": "parser",
+          "error": "['mt', 'tube']: каталог вернул 0 тайтлов; правило устарело или сайт заблокировал запрос",
+          "seconds": 1.05
+        },
+        "title": {
+          "status": "parser",
+          "error": "['mt', 'tube']: главы не найдены; возможно, источник требует адаптер",
+          "seconds": 0.69
+        },
+        "chapter": {
+          "status": "parser",
+          "error": "['mt', 'tube']: изображения главы не найдены",
+          "seconds": 0.75
+        }
+      },
+      "overall": "broken_parser"
+    },
+    {
+      "parser": "manga24",
+      "source": "manga24",
+      "title": "Manga24",
+      "host": "https://manga24.ru",
+      "stages": {
+        "catalog": {
+          "status": "blocked",
+          "error": "Ошибка сети для https://manga24.ru/catalog?order_by=popularity&page=1: _ssl.c:993: The handshake operation timed out",
+          "seconds": 10.0
+        },
+        "title": {
+          "status": "blocked",
+          "error": "Ошибка сети для https://manga24.ru/fairytail: [WinError 10054] Удаленный хост принудительно разорвал существующее подключение",
+          "seconds": 0.08
+        },
+        "chapter": {
+          "status": "blocked",
+          "error": "Ошибка сети для https://manga24.ru/fairytail/001: [WinError 10054] Удаленный хост принудительно разорвал существующее подключение",
+          "seconds": 0.08
+        }
+      },
+      "overall": "blocked_or_unavailable"
+    },
+    {
+      "parser": "mangabat",
+      "source": "mangabat",
+      "title": "MangaBat",
+      "host": "https://mangabat.com",
+      "stages": {
+        "catalog": {
+          "status": "parser",
+          "error": "mangabat: каталог вернул 0 тайтлов; правило устарело или сайт заблокировал запрос",
+          "seconds": 2.06
+        },
+        "title": {
+          "status": "parser",
+          "error": "mangabat: главы не найдены; возможно, источник требует адаптер",
+          "seconds": 2.03
+        },
+        "chapter": {
+          "status": "parser",
+          "error": "mangabat: изображения главы не найдены",
+          "seconds": 2.03
+        }
+      },
+      "overall": "broken_parser"
+    },
+    {
+      "parser": "mangabook",
+      "source": "mangabook",
+      "title": "MangaBook",
+      "host": "https://mangabook.org",
+      "stages": {
+        "catalog": {
+          "status": "error",
+          "error": "HTTP 404: https://mangabook.org/manga-list?page=0",
+          "seconds": 0.83
+        },
+        "title": {
+          "status": "parser",
+          "error": "mangabook: главы не найдены; возможно, источник требует адаптер",
+          "seconds": 0.8
+        },
+        "chapter": {
+          "status": "error",
+          "error": "HTTP 404: https://mangabook.org/manga/bleach/Vol.1-Ch.1",
+          "seconds": 0.73
+        }
+      },
+      "overall": "broken_parser"
+    },
+    {
+      "parser": "mangabuff",
+      "source": "mangabuff",
+      "title": "Manga Buff",
+      "host": "https://mangabuff.ru",
+      "stages": {
+        "catalog": {
+          "status": "parser",
+          "error": "mangabuff: каталог вернул 0 тайтлов; правило устарело или сайт заблокировал запрос",
+          "seconds": 0.42
+        },
+        "title": {
+          "status": "ok",
+          "count": null,
+          "seconds": 0.86
+        },
+        "chapter": {
+          "status": "ok",
+          "count": 65,
+          "seconds": 0.38
+        }
+      },
+      "overall": "partial"
+    },
+    {
+      "parser": "mangachan",
+      "source": "['chan', 'mchan']",
+      "title": "Манга-тян!",
+      "host": "https://im.manga-chan.me/",
+      "stages": {
+        "catalog": {
+          "status": "ok",
+          "count": 1,
+          "seconds": 4.08
+        },
+        "title": {
+          "status": "ok",
+          "count": null,
+          "seconds": 2.84
+        },
+        "chapter": {
+          "status": "ok",
+          "count": 33,
+          "seconds": 0.97
+        }
+      },
+      "overall": "working"
+    },
+    {
+      "parser": "mangaclub",
+      "source": "mangclub",
+      "title": "MangaClub (DEAD)",
+      "host": "https://mangaclub.ru/",
+      "stages": {
+        "catalog": {
+          "status": "parser",
+          "error": "mangclub: каталог вернул 0 тайтлов; правило устарело или сайт заблокировал запрос",
+          "seconds": 1.0
+        },
+        "title": {
+          "status": "parser",
+          "error": "mangclub: главы не найдены; возможно, источник требует адаптер",
+          "seconds": 0.98
+        },
+        "chapter": {
+          "status": "parser",
+          "error": "mangclub: изображения главы не найдены",
+          "seconds": 1.05
+        }
+      },
+      "overall": "broken_parser"
+    },
+    {
+      "parser": "mangadex",
+      "source": "mangadex",
+      "title": "MangaDex",
+      "host": "https://api.mangadex.org/",
+      "stages": {
+        "catalog": {
+          "status": "ok",
+          "count": 3,
+          "seconds": 1.41
+        },
+        "title": {
+          "status": "parser",
+          "error": "mangadex: главы не найдены; возможно, источник требует адаптер",
+          "seconds": 2.83
+        },
+        "chapter": {
+          "status": "ok",
+          "count": 24,
+          "seconds": 1.08
+        }
+      },
+      "overall": "partial"
+    },
+    {
+      "parser": "mangaeden",
+      "source": "['maEn', 'me', 'med']",
+      "title": "MangaEden English",
+      "host": "https://www.mangaeden.com/eng/",
+      "stages": {
+        "catalog": {
+          "status": "parser",
+          "error": "['maEn', 'me', 'med']: каталог вернул 0 тайтлов; правило устарело или сайт заблокировал запрос",
+          "seconds": 2.27
+        },
+        "title": {
+          "status": "parser",
+          "error": "['maEn', 'me', 'med']: главы не найдены; возможно, источник требует адаптер",
+          "seconds": 2.3
+        },
+        "chapter": {
+          "status": "parser",
+          "error": "['maEn', 'me', 'med']: изображения главы не найдены",
+          "seconds": 2.22
+        }
+      },
+      "overall": "broken_parser"
+    },
+    {
+      "parser": "mangaedenit",
+      "source": "['maIt', 'ma-it', 'mai']",
+      "title": "MangaEden Italian",
+      "host": "https://www.mangaeden.com/it/",
+      "stages": {
+        "catalog": {
+          "status": "parser",
+          "error": "['maIt', 'ma-it', 'mai']: каталог вернул 0 тайтлов; правило устарело или сайт заблокировал запрос",
+          "seconds": 2.22
+        },
+        "title": {
+          "status": "parser",
+          "error": "['maIt', 'ma-it', 'mai']: главы не найдены; возможно, источник требует адаптер",
+          "seconds": 2.06
+        },
+        "chapter": {
+          "status": "parser",
+          "error": "['maIt', 'ma-it', 'mai']: изображения главы не найдены",
+          "seconds": 2.08
+        }
+      },
+      "overall": "broken_parser"
+    },
+    {
+      "parser": "mangafox",
+      "source": "mf",
+      "title": "Manga Fox",
+      "host": "http://fanfox.net/",
+      "stages": {
+        "catalog": {
+          "status": "ok",
+          "count": 70,
+          "seconds": 1.03
+        },
+        "title": {
+          "status": "ok",
+          "count": null,
+          "seconds": 2.95
+        },
+        "chapter": {
+          "status": "ok",
+          "count": 31,
+          "seconds": 24.06
+        }
+      },
+      "overall": "working"
+    },
+    {
+      "parser": "mangahere",
+      "source": "mangahere",
+      "title": "MangaHere",
+      "host": "http://www.mangahere.cc/",
+      "stages": {
+        "catalog": {
+          "status": "ok",
+          "count": 70,
+          "seconds": 2.25
+        },
+        "title": {
+          "status": "ok",
+          "count": null,
+          "seconds": 0.98
+        },
+        "chapter": {
+          "status": "ok",
+          "count": 13,
+          "seconds": 12.94
+        }
+      },
+      "overall": "working"
+    },
+    {
+      "parser": "mangahub",
+      "source": "mangahub",
+      "title": "MangaHub",
+      "host": "https://v5.mangahub.one/",
+      "stages": {
+        "catalog": {
+          "status": "blocked",
+          "error": "Ошибка сети для https://v5.mangahub.one/explore/sort-is-rating?page=1: [SSL: UNEXPECTED_EOF_WHILE_READING] EOF occurred in violation of protocol (_ssl.c:1010)",
+          "seconds": 1.56
+        },
+        "title": {
+          "status": "blocked",
+          "error": "Ошибка сети для https://v5.mangahub.one/title/born_mercenary: [SSL: UNEXPECTED_EOF_WHILE_READING] EOF occurred in violation of protocol (_ssl.c:1010)",
+          "seconds": 1.56
+        },
+        "chapter": {
+          "status": "blocked",
+          "error": "Ошибка сети для https://v5.mangahub.one/read/859265: [SSL: UNEXPECTED_EOF_WHILE_READING] EOF occurred in violation of protocol (_ssl.c:1010)",
+          "seconds": 1.58
+        }
+      },
+      "overall": "blocked_or_unavailable"
+    },
+    {
+      "parser": "mangahub_cc",
+      "source": "mangahub_cc",
+      "title": "MangaHub_CC",
+      "host": "https://mangahub.cc",
+      "stages": {
+        "catalog": {
+          "status": "ok",
+          "count": 21,
+          "seconds": 1.48
+        },
+        "title": {
+          "status": "ok",
+          "count": null,
+          "seconds": 1.02
+        },
+        "chapter": {
+          "status": "ok",
+          "count": 47,
+          "seconds": 0.98
+        }
+      },
+      "overall": "working"
+    },
+    {
+      "parser": "mangakatana",
+      "source": "mangakatana",
+      "title": "MangaKatana",
+      "host": "https://mangakatana.com",
+      "stages": {
+        "catalog": {
+          "status": "ok",
+          "count": 19,
+          "seconds": 1.08
+        },
+        "title": {
+          "status": "ok",
+          "count": null,
+          "seconds": 0.89
+        },
+        "chapter": {
+          "status": "ok",
+          "count": 39,
+          "seconds": 0.89
+        }
+      },
+      "overall": "working"
+    },
+    {
+      "parser": "mangalib",
+      "source": "mangalib",
+      "title": "MangaLib",
+      "host": "https://mangalib.me/",
+      "stages": {
+        "catalog": {
+          "status": "parser",
+          "error": "mangalib: каталог вернул 0 тайтлов; правило устарело или сайт заблокировал запрос",
+          "seconds": 1.09
+        },
+        "title": {
+          "status": "ok",
+          "count": null,
+          "seconds": 1.47
+        },
+        "chapter": {
+          "status": "ok",
+          "count": 25,
+          "seconds": 0.78
+        }
+      },
+      "overall": "partial"
+    },
+    {
+      "parser": "manganelo",
+      "source": "manganato",
+      "title": "MangaNato",
+      "host": "https://manganato.gg",
+      "stages": {
+        "catalog": {
+          "status": "error",
+          "error": "HTTP 404: https://www.manganato.gg/manga/manga-list/hot-manga?page=1",
+          "seconds": 0.66
+        },
+        "title": {
+          "status": "ok",
+          "count": null,
+          "seconds": 3.09
+        },
+        "chapter": {
+          "status": "ok",
+          "count": 19,
+          "seconds": 0.83
+        }
+      },
+      "overall": "partial"
+    },
+    {
+      "parser": "mangapark",
+      "source": "['mpark', 'park']",
+      "title": "MangaPark",
+      "host": "https://mangapark.net/",
+      "stages": {
+        "catalog": {
+          "status": "blocked",
+          "error": "Ошибка сети для https://mangapark.net/genre/1: [SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: unable to get local issuer certificate (_ssl.c:1010)",
+          "seconds": 2.91
+        },
+        "title": {
+          "status": "blocked",
+          "error": "Ошибка сети для https://mangapark.net/manga/prince-of-tennis: [SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: unable to get local issuer certificate (_ssl.c:1010)",
+          "seconds": 2.77
+        },
+        "chapter": {
+          "status": "blocked",
+          "error": "Ошибка сети для https://mangapark.net/manga/prince-of-tennis/i1335536/v41/c367/1: [SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: unable to get local issuer certificate (_ssl.c:1010)",
+          "seconds": 2.77
+        }
+      },
+      "overall": "blocked_or_unavailable"
+    },
+    {
+      "parser": "mangapoisk",
+      "source": "mangapoisk",
+      "title": "MangaPoisk",
+      "host": "https://mangapoisk.me/",
+      "stages": {
+        "catalog": {
+          "status": "ok",
+          "count": 40,
+          "seconds": 1.14
+        },
+        "title": {
+          "status": "ok",
+          "count": null,
+          "seconds": 1.83
+        },
+        "chapter": {
+          "status": "ok",
+          "count": 128,
+          "seconds": 0.98
+        }
+      },
+      "overall": "working"
+    },
+    {
+      "parser": "mangarawclub",
+      "source": "mangarawclub",
+      "title": "Manga Geko",
+      "host": "https://www.mgeko.cc/",
+      "stages": {
+        "catalog": {
+          "status": "ok",
+          "count": 19,
+          "seconds": 1.05
+        },
+        "title": {
+          "status": "ok",
+          "count": null,
+          "seconds": 1.75
+        },
+        "chapter": {
+          "status": "ok",
+          "count": 12,
+          "seconds": 0.86
+        }
+      },
+      "overall": "working"
+    },
+    {
+      "parser": "mangatown",
+      "source": "mangatown",
+      "title": "MangaTown",
+      "host": "http://www.mangatown.com/",
+      "stages": {
+        "catalog": {
+          "status": "ok",
+          "count": 30,
+          "seconds": 1.16
+        },
+        "title": {
+          "status": "ok",
+          "count": null,
+          "seconds": 1.02
+        },
+        "chapter": {
+          "status": "ok",
+          "count": 28,
+          "seconds": 33.75
+        }
+      },
+      "overall": "working"
+    },
+    {
+      "parser": "mintmanga",
+      "source": "mintmanga",
+      "title": "MintManga",
+      "host": "https://2.mintmanga.one",
+      "stages": {
+        "catalog": {
+          "status": "ok",
+          "count": 50,
+          "seconds": 1.2
+        },
+        "title": {
+          "status": "ok",
+          "count": null,
+          "seconds": 0.98
+        },
+        "chapter": {
+          "status": "error",
+          "error": "HTTP 404: https://2.mintmanga.one/djinks/vol1/1?d=MzEzNzY3NA&mtr=true",
+          "seconds": 0.62
+        }
+      },
+      "overall": "partial"
+    },
+    {
+      "parser": "nettruyen",
+      "source": "nettruyen",
+      "title": "NetTruyen",
+      "host": "http://nhattruyenmax.com",
+      "stages": {
+        "catalog": {
+          "status": "blocked",
+          "error": "Ошибка сети для https://nhattruyenmax.com/tim-truyen?status=-1&sort=15&page=1: [SSL: UNEXPECTED_EOF_WHILE_READING] EOF occurred in violation of protocol (_ssl.c:1010)",
+          "seconds": 1.77
+        },
+        "title": {
+          "status": "blocked",
+          "error": "Ошибка сети для https://nhattruyento.com/truyen-tranh/touch-17: [SSL: UNEXPECTED_EOF_WHILE_READING] EOF occurred in violation of protocol (_ssl.c:1010)",
+          "seconds": 1.7
+        },
+        "chapter": {
+          "status": "blocked",
+          "error": "Ошибка сети для https://nhattruyento.com/truyen-tranh/touch/chap-1/550: [SSL: UNEXPECTED_EOF_WHILE_READING] EOF occurred in violation of protocol (_ssl.c:1010)",
+          "seconds": 1.67
+        }
+      },
+      "overall": "blocked_or_unavailable"
+    },
+    {
+      "parser": "newbiemanga",
+      "source": "newbiemanga",
+      "title": "NewManga (Dead-Закрылся)",
+      "host": "https://newmanga.org/",
+      "stages": {
+        "catalog": {
+          "status": "error",
+          "error": "HTTP 404: https://newmanga.org/api/v2/projects/popular?size=30&page=1",
+          "seconds": 0.84
+        },
+        "title": {
+          "status": "error",
+          "error": "HTTP 404: https://newmanga.org/api/v2/projects/solo-leveling",
+          "seconds": 0.92
+        },
+        "chapter": {
+          "status": "error",
+          "error": "HTTP 404: https://newmanga.org/api/v3/chapters/14653/pages",
+          "seconds": 1.47
+        }
+      },
+      "overall": "broken_parser"
+    },
+    {
+      "parser": "nhentai",
+      "source": "['nhen', 'nhentai']",
+      "title": "nHentai",
+      "host": "https://nhentai.net/",
+      "stages": {
+        "catalog": {
+          "status": "parser",
+          "error": "['nhen', 'nhentai']: каталог вернул 0 тайтлов; правило устарело или сайт заблокировал запрос",
+          "seconds": 0.8
+        },
+        "title": {
+          "status": "error",
+          "error": "HTTP 404: https://nhentai.net/g/374008/",
+          "seconds": 0.61
+        },
+        "chapter": {
+          "status": "error",
+          "error": "HTTP 404: https://nhentai.net/g/374008/",
+          "seconds": 0.61
+        }
+      },
+      "overall": "broken_parser"
+    },
+    {
+      "parser": "omegascans",
+      "source": "omegascans",
+      "title": "Omega Scans",
+      "host": "https://omegascans.org",
+      "stages": {
+        "catalog": {
+          "status": "parser",
+          "error": "omegascans: каталог вернул 0 тайтлов; правило устарело или сайт заблокировал запрос",
+          "seconds": 0.81
+        },
+        "title": {
+          "status": "parser",
+          "error": "omegascans: главы не найдены; возможно, источник требует адаптер",
+          "seconds": 0.91
+        },
+        "chapter": {
+          "status": "ok",
+          "count": 13,
+          "seconds": 1.2
+        }
+      },
+      "overall": "partial"
+    },
+    {
+      "parser": "ranobe-me",
+      "source": "Ranobe_me",
+      "title": "Ranobe.me",
+      "host": "https://ranobe.me",
+      "stages": {
+        "catalog": {
+          "status": "ok",
+          "count": 20,
+          "seconds": 0.77
+        },
+        "title": {
+          "status": "ok",
+          "count": null,
+          "seconds": 1.66
+        },
+        "chapter": {
+          "status": "ok",
+          "count": 1,
+          "seconds": 0.67
+        }
+      },
+      "overall": "working"
+    },
+    {
+      "parser": "ranobehub",
+      "source": "ranobehub",
+      "title": "RanobeHub",
+      "host": "https://ranobehub.org",
+      "stages": {
+        "catalog": {
+          "status": "parser",
+          "error": "ranobehub: каталог вернул 0 тайтлов; правило устарело или сайт заблокировал запрос",
+          "seconds": 0.72
+        },
+        "title": {
+          "status": "parser",
+          "error": "ranobehub: главы не найдены; возможно, источник требует адаптер",
+          "seconds": 2.31
+        },
+        "chapter": {
+          "status": "ok",
+          "count": 1,
+          "seconds": 0.51
+        }
+      },
+      "overall": "partial"
+    },
+    {
+      "parser": "ranobelib",
+      "source": "ranobelib",
+      "title": "RanobeLib",
+      "host": "https://ranobelib.me",
+      "stages": {
+        "catalog": {
+          "status": "parser",
+          "error": "ranobelib: каталог вернул 0 тайтлов; правило устарело или сайт заблокировал запрос",
+          "seconds": 0.97
+        },
+        "title": {
+          "status": "ok",
+          "count": null,
+          "seconds": 3.45
+        },
+        "chapter": {
+          "status": "ok",
+          "count": 1,
+          "seconds": 0.69
+        }
+      },
+      "overall": "partial"
+    },
+    {
+      "parser": "ranobes",
+      "source": "ranobes",
+      "title": "Ранобэс",
+      "host": "https://ranobes.com",
+      "stages": {
+        "catalog": {
+          "status": "ok",
+          "count": 10,
+          "seconds": 1.69
+        },
+        "title": {
+          "status": "ok",
+          "count": null,
+          "seconds": 1.94
+        },
+        "chapter": {
+          "status": "ok",
+          "count": 1,
+          "seconds": 0.97
+        }
+      },
+      "overall": "working"
+    },
+    {
+      "parser": "rawdevart",
+      "source": "rawdevart",
+      "title": "RawDevart",
+      "host": "https://rawdevart.art",
+      "stages": {
+        "catalog": {
+          "status": "ok",
+          "count": 40,
+          "seconds": 1.09
+        },
+        "title": {
+          "status": "parser",
+          "error": "rawdevart: главы не найдены; возможно, источник требует адаптер",
+          "seconds": 1.5
+        },
+        "chapter": {
+          "status": "ok",
+          "count": 11,
+          "seconds": 0.75
+        }
+      },
+      "overall": "partial"
+    },
+    {
+      "parser": "rawkuma",
+      "source": "rawkuma",
+      "title": "Rawkuma",
+      "host": "https://rawkuma.net/",
+      "stages": {
+        "catalog": {
+          "status": "error",
+          "error": "HTTP 404: https://rawkuma.net/manga-sitemap1.xml",
+          "seconds": 0.67
+        },
+        "title": {
+          "status": "ok",
+          "count": null,
+          "seconds": 2.58
+        },
+        "chapter": {
+          "status": "ok",
+          "count": 14,
+          "seconds": 0.97
+        }
+      },
+      "overall": "partial"
+    },
+    {
+      "parser": "rbgmanga",
+      "source": "rbgmanga",
+      "title": "Re:Manga",
+      "host": "https://api.remanga.org",
+      "stages": {
+        "catalog": {
+          "status": "parser",
+          "error": "rbgmanga: каталог вернул 0 тайтлов; правило устарело или сайт заблокировал запрос",
+          "seconds": 0.84
+        },
+        "title": {
+          "status": "parser",
+          "error": "rbgmanga: главы не найдены; возможно, источник требует адаптер",
+          "seconds": 1.38
+        },
+        "chapter": {
+          "status": "ok",
+          "count": 51,
+          "seconds": 0.67
+        }
+      },
+      "overall": "partial"
+    },
+    {
+      "parser": "readm",
+      "source": "readm",
+      "title": "ReadM",
+      "host": "https://readm.org/",
+      "stages": {
+        "catalog": {
+          "status": "unavailable",
+          "error": "The read operation timed out",
+          "seconds": 10.52
+        },
+        "title": {
+          "status": "unavailable",
+          "error": "The read operation timed out",
+          "seconds": 10.47
+        },
+        "chapter": {
+          "status": "unavailable",
+          "error": "The read operation timed out",
+          "seconds": 10.47
+        }
+      },
+      "overall": "blocked_or_unavailable"
+    },
+    {
+      "parser": "readmanga",
+      "source": "readmanga",
+      "title": "ReadManga (Usagi)",
+      "host": "https://a.zazaza.me/",
+      "stages": {
+        "catalog": {
+          "status": "ok",
+          "count": 50,
+          "seconds": 1.12
+        },
+        "title": {
+          "status": "parser",
+          "error": "readmanga: главы не найдены; возможно, источник требует адаптер",
+          "seconds": 1.77
+        },
+        "chapter": {
+          "status": "ok",
+          "count": 2,
+          "seconds": 1.38
+        }
+      },
+      "overall": "partial"
+    },
+    {
+      "parser": "readmangatoday",
+      "source": "readmangatoday",
+      "title": "Readmng",
+      "host": "https://www.readmng.com/",
+      "stages": {
+        "catalog": {
+          "status": "parser",
+          "error": "readmangatoday: каталог вернул 0 тайтлов; правило устарело или сайт заблокировал запрос",
+          "seconds": 4.34
+        },
+        "title": {
+          "status": "parser",
+          "error": "readmangatoday: главы не найдены; возможно, источник требует адаптер",
+          "seconds": 3.73
+        },
+        "chapter": {
+          "status": "parser",
+          "error": "readmangatoday: изображения главы не найдены",
+          "seconds": 3.5
+        }
+      },
+      "overall": "broken_parser"
+    },
+    {
+      "parser": "renovels",
+      "source": "renovels",
+      "title": "Renovels",
+      "host": "https://renovels.org",
+      "stages": {
+        "catalog": {
+          "status": "parser",
+          "error": "renovels: каталог вернул 0 тайтлов; правило устарело или сайт заблокировал запрос",
+          "seconds": 0.84
+        },
+        "title": {
+          "status": "parser",
+          "error": "renovels: главы не найдены; возможно, источник требует адаптер",
+          "seconds": 1.97
+        },
+        "chapter": {
+          "status": "ok",
+          "count": 1,
+          "seconds": 0.75
+        }
+      },
+      "overall": "partial"
+    },
+    {
+      "parser": "rulate",
+      "source": "rulate",
+      "title": "Rulate",
+      "host": "https://tl.rulate.ru",
+      "stages": {
+        "catalog": {
+          "status": "ok",
+          "count": 20,
+          "seconds": 1.3
+        },
+        "title": {
+          "status": "error",
+          "error": "HTTP 404: https://tl.rulate.ru/book/22",
+          "seconds": 0.23
+        },
+        "chapter": {
+          "status": "blocked",
+          "error": "HTTP 403: https://tl.rulate.ru/book/1689/250072/ready",
+          "seconds": 0.28
+        }
+      },
+      "overall": "blocked_or_unavailable"
+    },
+    {
+      "parser": "ruranobe",
+      "source": "ruranobe",
+      "title": "RuRanobe",
+      "host": "https://ruranobe.ru/",
+      "stages": {
+        "catalog": {
+          "status": "ok",
+          "count": 40,
+          "seconds": 0.59
+        },
+        "title": {
+          "status": "ok",
+          "count": null,
+          "seconds": 0.44
+        },
+        "chapter": {
+          "status": "ok",
+          "count": 1,
+          "seconds": 0.42
+        }
+      },
+      "overall": "working"
+    },
+    {
+      "parser": "seimanga",
+      "source": "seimanga",
+      "title": "SeiManga",
+      "host": "https://1.seimanga.me",
+      "stages": {
+        "catalog": {
+          "status": "ok",
+          "count": 50,
+          "seconds": 1.12
+        },
+        "title": {
+          "status": "ok",
+          "count": null,
+          "seconds": 1.58
+        },
+        "chapter": {
+          "status": "ok",
+          "count": 82,
+          "seconds": 1.08
+        }
+      },
+      "overall": "working"
+    },
+    {
+      "parser": "senkognito",
+      "source": "senkognito",
+      "title": "Senkognito (18+)",
+      "host": "https://ne.senkognito.com",
+      "stages": {
+        "catalog": {
+          "status": "error",
+          "error": "HTTP 404: http://bypass.mwx.su/api/manga/senkuro/mangas?page=1",
+          "seconds": 0.45
+        },
+        "title": {
+          "status": "blocked",
+          "error": "HTTP 403: https://ne.senkognito.com/manga/the-butterfly-inside",
+          "seconds": 1.44
+        },
+        "chapter": {
+          "status": "parser",
+          "error": "senkognito: изображения главы не найдены",
+          "seconds": 0.33
+        }
+      },
+      "overall": "blocked_or_unavailable"
+    },
+    {
+      "parser": "senkuro",
+      "source": "senkuro",
+      "title": "Senkuro",
+      "host": "https://bypass.mwx.su/",
+      "stages": {
+        "catalog": {
+          "status": "error",
+          "error": "HTTP 404: https://bypass.mwx.su/api/manga/senkuro/mangas?page=1",
+          "seconds": 0.27
+        },
+        "title": {
+          "status": "parser",
+          "error": "senkuro: главы не найдены; возможно, источник требует адаптер",
+          "seconds": 0.61
+        },
+        "chapter": {
+          "status": "error",
+          "error": "HTTP 404: https://bypass.mwx.su/api/manga/senkuro/images/magic-emperor/TUFOR0FfQ0hBUFRFUjo4MzkyMzgwMjk2NjIyMTE5OA",
+          "seconds": 0.28
+        }
+      },
+      "overall": "broken_parser"
+    },
+    {
+      "parser": "sexkomix",
+      "source": "sexkomix",
+      "title": "SexKomix",
+      "host": "https://sexkomix2.com",
+      "stages": {
+        "catalog": {
+          "status": "ok",
+          "count": 23,
+          "seconds": 1.41
+        },
+        "title": {
+          "status": "ok",
+          "count": null,
+          "seconds": 1.44
+        },
+        "chapter": {
+          "status": "parser",
+          "error": "sexkomix: изображения главы не найдены",
+          "seconds": 0.95
+        }
+      },
+      "overall": "partial"
+    },
+    {
+      "parser": "unicomics",
+      "source": "unicomics",
+      "title": "UniComics",
+      "host": "https://unicomics.ru/",
+      "stages": {
+        "catalog": {
+          "status": "ok",
+          "count": 20,
+          "seconds": 0.62
+        },
+        "title": {
+          "status": "ok",
+          "count": null,
+          "seconds": 1.03
+        },
+        "chapter": {
+          "status": "ok",
+          "count": 1,
+          "seconds": 1.03
+        }
+      },
+      "overall": "working"
+    },
+    {
+      "parser": "vdppl",
+      "source": "vdppl",
+      "title": "VooDoo People",
+      "host": "http://vdppl.ru",
+      "stages": {
+        "catalog": {
+          "status": "parser",
+          "error": "vdppl: каталог вернул 0 тайтлов; правило устарело или сайт заблокировал запрос",
+          "seconds": 0.45
+        },
+        "title": {
+          "status": "parser",
+          "error": "vdppl: главы не найдены; возможно, источник требует адаптер",
+          "seconds": 0.41
+        },
+        "chapter": {
+          "status": "error",
+          "error": "HTTP 404: http://google.ru/upload/images/TSW-3_12.fb2",
+          "seconds": 0.27
+        }
+      },
+      "overall": "broken_parser"
+    },
+    {
+      "parser": "vkcom",
+      "source": "vk",
+      "title": "VK (Test)",
+      "host": "https://vk.com/",
+      "stages": {
+        "catalog": {
+          "status": "ok",
+          "count": 3,
+          "seconds": 0.25
+        },
+        "title": {
+          "status": "blocked",
+          "error": "Ошибка сети для https://vk.com/martial_peak_club: [SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: unable to get local issuer certificate (_ssl.c:1010)",
+          "seconds": 0.16
+        },
+        "chapter": {
+          "status": "blocked",
+          "error": "Ошибка сети для https://vk.com/@martial_peak_club-1448: [SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: unable to get local issuer certificate (_ssl.c:1010)",
+          "seconds": 0.14
+        }
+      },
+      "overall": "blocked_or_unavailable"
+    },
+    {
+      "parser": "wamanga",
+      "source": "wamanga",
+      "title": "WaManga",
+      "host": "https://wamanga.ru",
+      "stages": {
+        "catalog": {
+          "status": "parser",
+          "error": "wamanga: каталог вернул 0 тайтлов; правило устарело или сайт заблокировал запрос",
+          "seconds": 0.25
+        },
+        "title": {
+          "status": "ok",
+          "count": null,
+          "seconds": 0.52
+        },
+        "chapter": {
+          "status": "ok",
+          "count": 17,
+          "seconds": 0.56
+        }
+      },
+      "overall": "partial"
+    },
+    {
+      "parser": "webtoon",
+      "source": "webtoon",
+      "title": "WebToon",
+      "host": "https://www.webtoons.com/en/",
+      "stages": {
+        "catalog": {
+          "status": "parser",
+          "error": "webtoon: каталог вернул 0 тайтлов; правило устарело или сайт заблокировал запрос",
+          "seconds": 3.64
+        },
+        "title": {
+          "status": "error",
+          "error": "HTTP 404: https://www.webtoons.com/en/romance/letsplay/list?title_no=1218",
+          "seconds": 1.48
+        },
+        "chapter": {
+          "status": "error",
+          "error": "HTTP 404: https://www.webtoons.com/en/romance/letsplay/ep-1-/viewer?title_no=1218&episode_no=1",
+          "seconds": 1.52
+        }
+      },
+      "overall": "broken_parser"
+    },
+    {
+      "parser": "weebcentral",
+      "source": "weebcentral",
+      "title": "Weeb Central",
+      "host": "https://weebcentral.com/",
+      "stages": {
+        "catalog": {
+          "status": "ok",
+          "count": 32,
+          "seconds": 1.22
+        },
+        "title": {
+          "status": "ok",
+          "count": null,
+          "seconds": 2.23
+        },
+        "chapter": {
+          "status": "ok",
+          "count": 60,
+          "seconds": 0.73
+        }
+      },
+      "overall": "working"
+    },
+    {
+      "parser": "welovemanga",
+      "source": "welovemanga",
+      "title": "welovemanga",
+      "host": "",
+      "overall": "broken_parser",
+      "stages": {
+        "config": {
+          "status": "parser",
+          "error": "Некорректный JSON E:\\mwx-json\\parsers\\welovemanga.json: Expecting value: line 168 column 5 (char 5295)"
+        }
+      }
+    },
+    {
+      "parser": "works-novel",
+      "source": "worksnovel",
+      "title": "Novel.tl",
+      "host": "https://novel.tl/",
+      "stages": {
+        "catalog": {
+          "status": "ok",
+          "count": 40,
+          "seconds": 1.31
+        },
+        "title": {
+          "status": "ok",
+          "count": null,
+          "seconds": 0.98
+        },
+        "chapter": {
+          "status": "ok",
+          "count": 1,
+          "seconds": 0.97
+        }
+      },
+      "overall": "working"
+    },
+    {
+      "parser": "yagami",
+      "source": "['yagami']",
+      "title": "Yagami",
+      "host": "https://read.yagami.me/",
+      "stages": {
+        "catalog": {
+          "status": "ok",
+          "count": 30,
+          "seconds": 1.44
+        },
+        "title": {
+          "status": "ok",
+          "count": null,
+          "seconds": 1.27
+        },
+        "chapter": {
+          "status": "ok",
+          "count": 41,
+          "seconds": 1.14
+        }
+      },
+      "overall": "working"
+    },
+    {
+      "parser": "yaoichan",
+      "source": "['ychan', 'yaoichan']",
+      "title": "Yaoi-Сhan!",
+      "host": "https://v18.yaoi-chan.me/",
+      "stages": {
+        "catalog": {
+          "status": "unavailable",
+          "error": "The read operation timed out",
+          "seconds": 10.53
+        },
+        "title": {
+          "status": "unavailable",
+          "error": "The read operation timed out",
+          "seconds": 10.59
+        },
+        "chapter": {
+          "status": "unavailable",
+          "error": "The read operation timed out",
+          "seconds": 10.53
+        }
+      },
+      "overall": "blocked_or_unavailable"
+    },
+    {
+      "parser": "yaoihub",
+      "source": "yaoihub",
+      "title": "YaoiHub",
+      "host": "https://v3.moonhub.me",
+      "stages": {
+        "catalog": {
+          "status": "ok",
+          "count": 48,
+          "seconds": 1.17
+        },
+        "title": {
+          "status": "error",
+          "error": "HTTP 404: https://v3.moonhub.me/title/youre_here",
+          "seconds": 0.69
+        },
+        "chapter": {
+          "status": "error",
+          "error": "HTTP 404: https://v3.moonhub.me/read/59417",
+          "seconds": 0.69
+        }
+      },
+      "overall": "partial"
+    },
+    {
+      "parser": "yaoilib",
+      "source": "yaoilib",
+      "title": "YaoiLib",
+      "host": "https://v2.shlib.life/",
+      "stages": {
+        "catalog": {
+          "status": "parser",
+          "error": "yaoilib: каталог вернул 0 тайтлов; правило устарело или сайт заблокировал запрос",
+          "seconds": 1.12
+        },
+        "title": {
+          "status": "ok",
+          "count": null,
+          "seconds": 1.55
+        },
+        "chapter": {
+          "status": "ok",
+          "count": 4,
+          "seconds": 0.67
+        }
+      },
+      "overall": "partial"
+    },
+    {
+      "parser": "yaoipoisk",
+      "source": "yaoipoisk",
+      "title": "YaoiPoisk",
+      "host": "https://yaoipoisk.net",
+      "stages": {
+        "catalog": {
+          "status": "ok",
+          "count": 40,
+          "seconds": 1.38
+        },
+        "title": {
+          "status": "ok",
+          "count": null,
+          "seconds": 1.77
+        },
+        "chapter": {
+          "status": "ok",
+          "count": 11,
+          "seconds": 1.33
+        }
+      },
+      "overall": "working"
+    },
+    {
+      "parser": "yaoiscan",
+      "source": "yaoiscan",
+      "title": "YaoiScan",
+      "host": "https://yaoiscan.com/",
+      "stages": {
+        "catalog": {
+          "status": "blocked",
+          "error": "HTTP 403: https://yaoiscan.com/manga/page/1/?m_orderby=rating",
+          "seconds": 0.69
+        },
+        "title": {
+          "status": "blocked",
+          "error": "HTTP 403: https://yaoiscan.com/read/jikyuu-jisoku-de-nani-ga-warui/",
+          "seconds": 0.58
+        },
+        "chapter": {
+          "status": "blocked",
+          "error": "HTTP 403: https://yaoiscan.com/read/jikyuu-jisoku-de-nani-ga-warui/chapter-1/",
+          "seconds": 0.62
+        }
+      },
+      "overall": "blocked_or_unavailable"
+    }
+  ]
+}

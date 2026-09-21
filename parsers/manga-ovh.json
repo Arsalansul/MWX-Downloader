@@ -1,0 +1,518 @@
+{
+  "id": 40129,
+  "version": 6,
+  "title": "Manga Ovh",
+  "host": "https://manga.ovh/",
+  "public_link": "https://manga.ovh",
+  "folder": "manga-ovh",
+  "name": "manga-ovh",
+  "chapters_order": true,
+  "language": "ru",
+  "encoding": "utf-8",
+  "icon_link": "https://raw.githubusercontent.com/veopot/mwx-json/main/img/manga-ovh.png",
+  "self_link": "https://raw.githubusercontent.com/veopot/mwx-json/main/parsers/manga-ovh.json",
+  "self_link2": "https://fant.my1.ru/mwparser/mwx/json/manga-ovh.json",
+  "catalog_link": "https://raw.githubusercontent.com/veopot/mwx-json/main/catalogs/manga-ovh.zip",
+  "file_type": "sqlite",
+  "author": {
+    "name": "Veopot",
+    "email": "fant-net@ya.ru"
+  },
+  "authorization_complete": {
+    "logo": "https://manga.ovh/apple-touch-icon.png",
+    "registration": "https://manga.ovh/",
+    "expires": 31536000000,
+    "values": {
+      "username": {
+        "label": "Логин",
+        "hint": "Введите свой логин",
+        "kind": "text"
+      },
+      "password": {
+        "label": "Пароль",
+        "hint": "Введите свой пароль",
+        "kind": "password"
+      },
+      "headers": {
+        "userAgent": "mangawatcherx",
+        "Referer": "%%url%%"
+      }
+    },
+    "request": {
+      "method": "json",
+      "url": "https://api.manga.ovh/account/signin"
+    },
+    "response_check": {
+      "status": 200,
+      "body_to_cookie": [
+        "username"
+      ]
+    }
+  },
+  "manga_search_complete": {
+    "headers": {
+      "User-Agent": "mangawatcherx",
+      "Referer": "%%url%%"
+    },
+    "search_link": "https://api.manga.ovh/search/book?pageSize=30&query=$query$&type=COMIC&page=$page$",
+    "query_type": "GET",
+    "add_manga": {
+      "start": "[",
+      "end": "]",
+      "next": "\"name\":{",
+      "link": {
+        "token1": "\"slug\":\"",
+        "token2": "\"",
+        "replace": {
+          "prefix": "https://api.manga.ovh/book/"
+        }
+      },
+      "cover": {
+        "token1": "\"poster\":\"",
+        "token2": "\""
+      },
+      "title": {
+        "token1": "\"name\":{",
+        "token2": "}",
+        "replace": [
+          {
+            "match": "\"ru\":\"",
+            "text": ""
+          },
+          {
+            "match": "\"original\":\"(.*?)\"",
+            "text": ""
+          },
+          {
+            "match": "\"en\":\"",
+            "text": ""
+          },
+          {
+            "match": "\",",
+            "text": " | "
+          },
+          {
+            "match": "\\\\",
+            "text": ""
+          }
+        ]
+      },
+      "summary": {
+        "token1": "\"pos",
+        "token2": "\"formats\":",
+        "replace": [
+          {
+            "match": "\"year\":",
+            "text": "Год выпуска "
+          },
+          {
+            "clear_escape": true
+          },
+          {
+            "match": "\"country\":\"",
+            "text": " Страна "
+          },
+          {
+            "match": "JAPAN",
+            "text": "Япония"
+          },
+          {
+            "match": "CHINA",
+            "text": "Китай"
+          },
+          {
+            "match": "KOREA",
+            "text": "Корея"
+          },
+          {
+            "match": "RUSSIAN",
+            "text": "Россия"
+          },
+          {
+            "match": "DONE",
+            "text": "Завершен"
+          },
+          {
+            "match": "ONGOING",
+            "text": "Продолжается"
+          },
+          {
+            "match": "\"contentStatus\":\"(.*?)\",",
+            "text": ""
+          },
+          {
+            "match": "ter\":\"(.*?)\",",
+            "text": ""
+          },
+          {
+            "match": "\"createdAt\":\"(.*?)\",",
+            "text": ""
+          },
+          {
+            "match": "\"updatedAt\":\"(.*?)\",",
+            "text": ""
+          },
+          {
+            "match": "\"longStrip\":(.*?),",
+            "text": ""
+          },
+          {
+            "match": "\",",
+            "text": " "
+          },
+          {
+            "match": "\"slug\":\"(.*?)\",",
+            "text": ""
+          },
+          {
+            "match": "\"name\":{\"ru\":\"(.*?)\",\"original\":\"(.*?)\",\"en\":\"(.*?)\"},",
+            "text": " "
+          },
+          {
+            "match": "\"status\":\"",
+            "text": " Статус-перевода "
+          }
+        ]
+      },
+      "uniq": {
+        "token1": "\"en\":\"",
+        "token2": "\""
+      }
+    }
+  },
+  "manga_list_complete": {
+    "method": "POST",
+    "headers": {
+      "User-Agent": "mangawatcherx",
+      "Referer": "%%url%%"
+    },
+    "iterator": {
+      "base_url": "https://api.manga.ovh/book?sort=createdAt&size=40&page=0",
+      "append_nums": {
+        "from": 0,
+        "to": 3000
+      }
+    },
+    "add_manga": {
+      "next": "\"name\":{",
+      "link": {
+        "before": "\"createdAt\":",
+        "token1": "\"id\":\"",
+        "token2": "\"",
+        "replace": {
+          "prefix": "https://api.manga.ovh/book/"
+        }
+      },
+      "title": {
+        "token1": "\"name\":{",
+        "token2": "}",
+        "replace": [
+          {
+            "match": "\"ru\":\"",
+            "text": ""
+          },
+          {
+            "match": "\"original\":\"(.*?)\"",
+            "text": ""
+          },
+          {
+            "match": "\"en\":\"",
+            "text": ""
+          },
+          {
+            "match": "\",",
+            "text": " | "
+          },
+          {
+            "match": "\\\\",
+            "text": ""
+          }
+        ]
+      },
+      "uniq": {
+        "token1": "\"en\":\"",
+        "token2": "\""
+      }
+    },
+    "link_corrector": [
+      {
+        "match": "https://manga.ovh/content/",
+        "text": "https://api.manga.ovh/book/"
+      }
+    ],
+    "rating_auto_inc": {
+      "start": 20000,
+      "inc": -1
+    }
+  },
+  "manga_complete": {
+    "headers": {
+      "User-Agent": "mangawatcherx",
+      "Referer": "%%url%%"
+    },
+    "title": {
+      "after": ",\"type\":",
+      "token1": "\"name\":{",
+      "token2": "\"},",
+      "replace": [
+        {
+          "match": "\"ru\":\"",
+          "text": ""
+        },
+        {
+          "match": "\"original\":\"(.*?)\"",
+          "text": ""
+        },
+        {
+          "match": "\"en\":\"",
+          "text": ""
+        },
+        {
+          "match": "\",",
+          "text": " | "
+        },
+        {
+          "match": ",",
+          "text": ""
+        },
+        {
+          "match": "\\\\",
+          "text": ""
+        }
+      ]
+    },
+    "additional_title": {
+      "skip": ",\"type\":",
+      "token1": "\"original\":\"",
+      "token2": "\","
+    },
+    "uniq": {
+      "skip": ",\"type\":",
+      "token1": "\"en\":\"",
+      "token2": "\""
+    },
+    "cover": {
+      "token1": "\"poster\":\"",
+      "token2": "\","
+    },
+    "author": {
+      "skip": "\"type\":\"AUTHOR\"",
+      "token1": "name\":\"",
+      "token2": "\""
+    },
+    "summary": {
+      "after": "\"description\":{",
+      "token1": "\"ru\":\"",
+      "token2": "\"",
+      "replace": [
+        {
+          "match": "u003Cp",
+          "text": ""
+        },
+        {
+          "match": "u003E",
+          "text": ""
+        },
+        {
+          "match": "\n",
+          "text": " "
+        },
+        {
+          "clear_escape": true
+        },
+        {
+          "match": "u003C",
+          "text": ""
+        },
+        {
+          "match": "<.*?>",
+          "text": ""
+        },
+        {
+          "match": "u002Fp",
+          "text": ""
+        },
+        {
+          "match": "&quot;",
+          "text": "'"
+        }
+      ]
+    },
+    "need_auth": "авторизироваться",
+    "status": {
+      "complete": {
+        "values": [
+          "\"status\":\"DONE\"",
+          "Переведена",
+          "Сингл"
+        ]
+      },
+      "ongoing": {
+        "value": "\"status\":\"ONGOING\""
+      }
+    },
+    "add_genres": {
+      "start": "\"labels\":[",
+      "end": "],",
+      "token1": "\"ru\":\"",
+      "token2": "\""
+    },
+    "is_mature": {
+      "values": [
+        "Сэйнэн",
+        "Эротика",
+        "Юри",
+        "Яой"
+      ]
+    },
+    "chapters_from_page": {
+      "before": "\"status\"",
+      "token1": "\"id\":\"",
+      "token2": "\"",
+      "replace": [
+        {
+          "prefix": "https://api.manga.ovh/book/"
+        },
+        {
+          "sufix": "/branches"
+        }
+      ],
+      "next": {
+        "before": "\"chaptersCount\"",
+        "token1": "{\"id\":\"",
+        "token2": "\",",
+        "replace": [
+          {
+            "prefix": "https://api.manga.ovh/branch/"
+          },
+          {
+            "sufix": "/chapters"
+          }
+        ]
+      }
+    },
+    "add_chapter": {
+      "start": "[",
+      "end": "]",
+      "next": "{",
+      "link": {
+        "token1": "id\":\"",
+        "token2": "\"",
+        "replace": {
+          "prefix": "https://api.manga.ovh/chapter/"
+        }
+      },
+      "uniq": {
+        "token1": "\"na",
+        "token2": "}",
+        "replace": [
+          {
+            "match": "me\":(.*?),\"volume\":(.*?),\"number\":(.*?).0,(.*)",
+            "text": "Том $2 Глава $3 $1"
+          },
+          {
+            "match": "\"",
+            "text": ""
+          },
+          {
+            "match": ".0,",
+            "text": ""
+          },
+          {
+            "match": "null",
+            "text": ""
+          }
+        ]
+      },
+      "title": {
+        "token1": "\"na",
+        "token2": "}",
+        "replace": [
+          {
+            "match": "me\":(.*?),\"volume\":(.*?),\"number\":(.*?).0,(.*)",
+            "text": "Том $2 Глава $3 $1"
+          },
+          {
+            "match": "\"",
+            "text": ""
+          },
+          {
+            "match": ".0,",
+            "text": ""
+          },
+          {
+            "match": "null",
+            "text": ""
+          }
+        ]
+      }
+    }
+  },
+  "chapter_complete": {
+    "headers": {
+      "User-Agent": "mangawatcherx",
+      "Referer": "%%url%%"
+    },
+    "add_numeration": true,
+    "add_images": {
+      "start": "\"pages\":[",
+      "token1": "\"image\":\"",
+      "token2": "\"",
+      "end": "],"
+    }
+  },
+  "test": [
+    {
+      "proc": "manga_list_complete",
+      "assert": {
+        "mangas": [
+          {
+            "title": "Another Emperor Reborn, Возрождение иного императора",
+            "link": "https://api.manga.ovh/book/another-emperor-reborn",
+            "uniq": "Another Emperor Reborn"
+          }
+        ],
+        "mangas_count": ">=20"
+      }
+    },
+    {
+      "proc": "manga_complete",
+      "link": "https://api.manga.ovh/i-am-the-only-level-up",
+      "title": "Перерождение Дяди | IsekaI Ojisan",
+      "assert": {
+        "cover": "https://storage.manga.ovh/manga/isekai-ojisan/poster/1653212911854.jpeg",
+        "summary": "@^(Проведя 17 лет)",
+        "genres": "@comedy",
+        "status": "ongoing",
+        "genres_count": ">=3",
+        "chapters_count": ">=10",
+        "chapters": [
+          {
+            "link": "https://api.manga.ovh/chapter/17a4cc77-69cf-42eb-9552-aae69e43286d",
+            "title": "Глава 40.0, Перевод от Arden's Translations"
+          },
+          {
+            "link": "https://api.manga.ovh/chapter/17a4cc77-69cf-42eb-9552-aae69e43286d"
+          }
+        ]
+      }
+    },
+    {
+      "proc": "chapter_complete",
+      "link": "https://api.manga.ovh/chapter/17a4cc77-69cf-42eb-9552-aae69e43286d",
+      "assert": {
+        "pages": [
+          {
+            "image": "https://storage.manga.ovh//chapter/17a4cc77-69cf-42eb-9552-aae69e43286d/1653248527234.jpeg"
+          },
+          {
+            "image": "https://storage.manga.ovh//chapter/17a4cc77-69cf-42eb-9552-aae69e43286d/1653248528717.jpeg"
+          },
+          {
+            "image": "https://storage.manga.ovh//chapter/17a4cc77-69cf-42eb-9552-aae69e43286d/1653248530353.jpeg"
+          }
+        ]
+      }
+    }
+  ]
+}

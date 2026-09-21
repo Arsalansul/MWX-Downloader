@@ -1,0 +1,6 @@
+__pycache__/
+*.py[cod]
+mwx.sqlite
+test-mwx.sqlite
+downloads/
+.mwx-web-port
