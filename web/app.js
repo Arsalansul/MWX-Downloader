@@ -80,7 +80,9 @@ async function loadJobs(){
 }
 
 $('source').onchange=sourceChanged; $('catalogTab').onclick=()=>setTab('catalog'); $('urlTab').onclick=()=>setTab('url');
-$('loadCatalog').onclick=loadCatalog; $('search').oninput=renderCatalog; $('loadUrl').onclick=()=>inspect($('titleUrl').value);
+$('loadCatalog').onclick=loadCatalog; $('search').oninput=renderCatalog;
+$('search').onkeydown=e=>{if(e.key==='Enter'&&!e.isComposing&&!$('loadCatalog').disabled){e.preventDefault();loadCatalog()}};
+$('loadUrl').onclick=()=>inspect($('titleUrl').value);
 $('titleUrl').onkeydown=e=>{if(e.key==='Enter')inspect($('titleUrl').value)};
 $('all').onclick=()=>select('all'); $('none').onclick=()=>select('none'); $('invert').onclick=()=>select('invert');
 $('download').onclick=downloadSelected; $('refreshJobs').onclick=loadJobs;
