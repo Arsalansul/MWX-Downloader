@@ -5,6 +5,9 @@ from __future__ import annotations
 
 import argparse
 import json
+import os
+import subprocess
+import sys
 import threading
 import time
 import uuid
@@ -23,6 +26,15 @@ from mwx_adapters import builtin_source_rows, create_engine
 ROOT = Path(__file__).resolve().parent
 WEB_ROOT = ROOT / "web"
 CHECK_REPORT = ROOT / "parser-check.json"
+
+
+def open_folder(path: Path) -> None:
+    if sys.platform == "win32":
+        os.startfile(path)  # type: ignore[attr-defined]
+    elif sys.platform == "darwin":
+        subprocess.Popen(["open", str(path)])
+    else:
+        subprocess.Popen(["xdg-open", str(path)])
 
 
 def source_rows(parser_dir: Path) -> list[dict[str, Any]]:
@@ -117,6 +129,22 @@ class App:
         thread.start()
         return job
 
+    def open_job_folder(self, job_id: str) -> None:
+        with self.lock:
+            job = self.jobs.get(job_id)
+            if not job:
+                raise ParserError("Загрузка не найдена")
+            if not job.files:
+                raise ParserError("Ни одна глава ещё не загружена")
+            folder = Path(job.files[0]).resolve().parent
+        try:
+            folder.relative_to(self.output.resolve())
+        except ValueError as exc:
+            raise ParserError("Папка загрузки находится вне каталога программы") from exc
+        if not folder.is_dir():
+            raise ParserError("Папка загрузки не найдена")
+        open_folder(folder)
+
     def _run_job(self, job: Job, manga: dict[str, Any], indexes: list[int]) -> None:
         with self.lock:
             job.state = "running"
@@ -208,6 +236,10 @@ class Handler(BaseHTTPRequestHandler):
                 data = self.body()
                 job = self.server.app.create_job(str(data.get("token", "")), data.get("chapters", []))
                 return self.json_response(job.public(), HTTPStatus.ACCEPTED)
+            if self.path.startswith("/api/jobs/") and self.path.endswith("/open"):
+                job_id = self.path.removeprefix("/api/jobs/").removesuffix("/open")
+                self.server.app.open_job_folder(job_id)
+                return self.json_response({"opened": True})
             return self.error_response(ParserError("Маршрут не найден"), 404)
         except Exception as exc:
             return self.error_response(exc, 500 if not isinstance(exc, (ParserError, ValueError, TypeError)) else 400)

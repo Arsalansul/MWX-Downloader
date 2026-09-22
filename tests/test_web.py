@@ -4,6 +4,7 @@ import threading
 import time
 import unittest
 import urllib.request
+from unittest import mock
 from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 from pathlib import Path
 
@@ -83,6 +84,10 @@ class WebIntegrationTests(unittest.TestCase):
             time.sleep(0.03)
         self.assertEqual(job["state"], "done")
         self.assertTrue(Path(job["files"][0]).exists())
+        with mock.patch("mwx_web.open_folder") as opener:
+            response = self.request(f'/api/jobs/{job["id"]}/open', {})
+        self.assertTrue(response["opened"])
+        opener.assert_called_once_with(Path(job["files"][0]).resolve().parent)
 
 
 if __name__ == "__main__":

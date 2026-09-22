@@ -71,11 +71,17 @@ async function downloadSelected(){
   try{await api('/api/downloads',{method:'POST',body:JSON.stringify({token:current.token,chapters})}); toast('Добавлено в очередь'); await loadJobs();}
   catch(e){toast(e.message,true)}finally{busy($('download'),false)}
 }
+async function openJobFolder(id, button){
+  busy(button,true,'Открываю…');
+  try{await api(`/api/jobs/${encodeURIComponent(id)}/open`,{method:'POST'});}
+  catch(e){toast(e.message,true)}finally{busy(button,false)}
+}
 async function loadJobs(){
   try{const jobs=await api('/api/jobs'); $('jobs').className='jobs'; $('jobs').innerHTML=jobs.length?jobs.map(j=>{
     const done=j.completed+j.failed, pct=j.total?Math.round(done/j.total*100):0;
     const state=({queued:'В очереди',running:'Скачивается',done:'Готово',done_with_errors:'Готово с ошибками',failed:'Ошибка'})[j.state]||j.state;
-    return `<article class="job"><div><strong>${esc(j.title)}</strong><span class="pill ${j.state}">${state}</span></div><p>${j.current?`Сейчас: ${esc(j.current)}${j.pages?` · стр. ${j.page}/${j.pages}`:''}`:`Глав: ${j.completed}/${j.total}${j.failed?` · ошибок ${j.failed}`:''}`}</p><div class="progress"><i style="width:${pct}%"></i></div>${j.error?`<small class="error">${esc(j.error)}</small>`:''}</article>`}).join(''):'<div class="empty">Очередь пуста</div>';
+    return `<article class="job"><div><strong>${esc(j.title)}</strong><span class="pill ${j.state}">${state}</span></div><div class="job-summary"><p>${j.current?`Сейчас: ${esc(j.current)}${j.pages?` · стр. ${j.page}/${j.pages}`:''}`:`Глав: ${j.completed}/${j.total}${j.failed?` · ошибок ${j.failed}`:''}`}</p>${j.files.length?`<button class="open-folder" data-job-id="${attr(j.id)}">Перейти в папку</button>`:''}</div><div class="progress"><i style="width:${pct}%"></i></div>${j.error?`<small class="error">${esc(j.error)}</small>`:''}</article>`}).join(''):'<div class="empty">Очередь пуста</div>';
+    document.querySelectorAll('.open-folder').forEach(button=>button.onclick=()=>openJobFolder(button.dataset.jobId,button));
   }catch(e){toast(e.message,true)}
 }
 
