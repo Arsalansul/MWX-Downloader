@@ -69,7 +69,8 @@ class WebIntegrationTests(unittest.TestCase):
             return json.loads(response.read())
 
     def test_catalog_title_and_download_job(self):
-        self.assertEqual(self.request("/api/sources")[0]["id"], "fixture")
+        source_ids = {item["id"] for item in self.request("/api/sources")}
+        self.assertTrue({"fixture", "naver-webtoon", "naver-series"}.issubset(source_ids))
         catalog = self.request("/api/catalog?source=fixture&max_pages=1")
         self.assertEqual(catalog[0]["title"], "Web title")
         title = self.request("/api/title", {"source": "fixture", "url": catalog[0]["link"]})

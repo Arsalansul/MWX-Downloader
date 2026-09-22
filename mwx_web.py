@@ -16,7 +16,8 @@ from pathlib import Path
 from typing import Any
 from urllib.parse import parse_qs, urlparse
 
-from mwx import DEFAULT_DOWNLOADS, DEFAULT_PARSERS, Engine, ParserError, download_chapter, load_source
+from mwx import DEFAULT_DOWNLOADS, DEFAULT_PARSERS, ParserError, download_chapter, load_source
+from mwx_adapters import builtin_source_rows, create_engine
 
 
 ROOT = Path(__file__).resolve().parent
@@ -31,7 +32,7 @@ def source_rows(parser_dir: Path) -> list[dict[str, Any]]:
         audit = {row["parser"]: row for row in report.get("results", [])}
     except (OSError, ValueError, KeyError):
         pass
-    rows = []
+    rows = builtin_source_rows()
     for path in sorted(parser_dir.glob("*.json")):
         try:
             source = load_source(path.name, parser_dir)
@@ -85,7 +86,7 @@ class App:
         self.lock = threading.RLock()
 
     def inspect_title(self, source_id: str, url: str) -> dict[str, Any]:
-        engine = Engine(load_source(source_id, self.parser_dir), timeout=self.timeout)
+        engine = create_engine(source_id, self.parser_dir, self.timeout)
         manga = engine.manga(url)
         token = uuid.uuid4().hex
         with self.lock:
@@ -106,6 +107,10 @@ class App:
             indexes = list(dict.fromkeys(int(value) for value in selected))
             if not indexes or any(value < 0 or value >= len(chapters) for value in indexes):
                 raise ParserError("Выберите хотя бы одну существующую главу")
+            blocked = [chapters[value] for value in indexes if chapters[value].get("downloadable") is False]
+            if blocked:
+                reason = blocked[0].get("availability") or "Глава недоступна для скачивания"
+                raise ParserError(str(reason))
             job = Job(uuid.uuid4().hex, record["source"], manga.get("title") or manga.get("uniq") or "title", len(indexes))
             self.jobs[job.id] = job
         thread = threading.Thread(target=self._run_job, args=(job, manga, indexes), daemon=True)
@@ -115,7 +120,7 @@ class App:
     def _run_job(self, job: Job, manga: dict[str, Any], indexes: list[int]) -> None:
         with self.lock:
             job.state = "running"
-        engine = Engine(load_source(job.source, self.parser_dir), timeout=self.timeout)
+        engine = create_engine(job.source, self.parser_dir, self.timeout)
         for ordinal, index in enumerate(indexes, 1):
             chapter = manga["chapters"][index]
             name = chapter.get("title") or f"chapter-{index + 1:04d}"
@@ -177,7 +182,7 @@ class Handler(BaseHTTPRequestHandler):
                 source_id = query.get("source", [""])[0]
                 max_pages_raw = query.get("max_pages", ["3"])[0]
                 max_pages = max(1, min(20, int(max_pages_raw)))
-                engine = Engine(load_source(source_id, self.server.app.parser_dir), timeout=self.server.app.timeout)
+                engine = create_engine(source_id, self.server.app.parser_dir, self.server.app.timeout)
                 return self.json_response(engine.catalog(max_pages))
             if parsed.path == "/api/jobs":
                 with self.server.app.lock:

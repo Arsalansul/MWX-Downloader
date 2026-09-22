@@ -60,11 +60,11 @@ function renderTitle() {
   $('titleSource').textContent=current.source; $('summary').textContent=(current.summary||'').replace(/<[^>]*>/g,' ').replace(/\s+/g,' ').trim();
   $('cover').src=current.cover||''; $('cover').hidden=!current.cover;
   $('chapterCount').textContent=`Главы · ${current.chapters.length}`;
-  $('chapters').innerHTML=current.chapters.map((c,i)=>`<label class="chapter"><input type="checkbox" value="${i}"><span>${esc(c.title||`Глава ${i+1}`)}</span><small>${esc(c.link)}</small></label>`).join('');
+  $('chapters').innerHTML=current.chapters.map((c,i)=>`<label class="chapter${c.downloadable===false?' unavailable':''}" title="${attr(c.availability||'')}"><input type="checkbox" value="${i}" ${c.downloadable===false?'disabled':''}><span>${esc(c.title||`Глава ${i+1}`)}${c.downloadable===false?' · недоступна':''}</span><small>${esc(c.availability||c.link)}</small></label>`).join('');
   document.querySelectorAll('#chapters input').forEach(x=>x.onchange=selectedCount); selectedCount();
 }
 function selectedCount(){ $('selectedCount').textContent=`Выбрано: ${document.querySelectorAll('#chapters input:checked').length}`; }
-function select(mode){ document.querySelectorAll('#chapters input').forEach(x=>x.checked=mode==='all'||(mode==='invert'&&!x.checked)); selectedCount(); }
+function select(mode){ document.querySelectorAll('#chapters input:not(:disabled)').forEach(x=>x.checked=mode==='all'||(mode==='invert'&&!x.checked)); selectedCount(); }
 async function downloadSelected(){
   const chapters=[...document.querySelectorAll('#chapters input:checked')].map(x=>Number(x.value));
   if(!chapters.length)return toast('Выберите главы',true); busy($('download'),true,'Добавляю…');
