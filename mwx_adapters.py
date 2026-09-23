@@ -7,12 +7,21 @@ import json
 import re
 from pathlib import Path
 from typing import Any
-from urllib.parse import parse_qs, urlencode, urlparse
+from urllib.parse import parse_qs, urlencode, urljoin, urlparse
 
 from mwx import Engine, ParserError, Source, normalize_url
 
 
 BUILTIN_SOURCES: list[dict[str, Any]] = [
+    {
+        "id": "comizy",
+        "title": "Comizy / MangaBuddy",
+        "host": "https://mangabuddy.com",
+        "status": "working",
+        "catalog": False,
+        "direct": True,
+        "download": True,
+    },
     {
         "id": "naver-webtoon",
         "title": "Naver Webtoon",
@@ -57,6 +66,8 @@ def builtin_source_rows() -> list[dict[str, Any]]:
 
 
 def create_engine(source_id: str, parser_dir: Path, timeout: float) -> Engine:
+    if source_id == "comizy":
+        return ComizyEngine(timeout=timeout)
     if source_id == "naver-webtoon":
         return NaverWebtoonEngine(timeout=timeout)
     if source_id == "naver-series":
@@ -108,6 +119,125 @@ def _assigned_json(page: str, variable: str) -> Any:
     except json.JSONDecodeError as exc:
         raise ParserError(f"Страница содержит некорректный {variable}") from exc
     return value
+
+
+def _plain_text(value: str) -> str:
+    return re.sub(r"\s+", " ", html.unescape(re.sub(r"<[^>]+>", " ", value))).strip()
+
+
+class ComizyEngine(Engine):
+    """Public chapter adapter for MangaBuddy links currently served by Comizy."""
+
+    host = "https://mangabuddy.com"
+    accepted_hosts = {
+        "mangabuddy.com", "www.mangabuddy.com", "comizy.com", "www.comizy.com",
+        "comizy.io", "www.comizy.io",
+    }
+
+    def __init__(self, timeout: float = 30):
+        super().__init__(Source(Path("comizy"), {
+            "name": "comizy", "title": "Comizy / MangaBuddy", "host": self.host,
+        }), timeout=timeout)
+
+    def manga(self, url: str) -> dict[str, Any]:
+        parsed = urlparse(normalize_url(url))
+        if parsed.hostname not in self.accepted_hosts:
+            raise ParserError("Для Comizy нужна ссылка mangabuddy.com или comizy.com")
+        page, final_url = self.fetch(url, {"headers": {"Referer": self.host + "/"}})
+        chapters: dict[str, dict[str, Any]] = {}
+        manga_data: dict[str, Any] = {}
+        site_config: dict[str, Any] = {}
+        next_data = re.search(
+            r'<script\b[^>]*id=["\']__NEXT_DATA__["\'][^>]*>(.*?)</script>', page, re.I | re.S
+        )
+        if next_data:
+            try:
+                payload = json.loads(html.unescape(next_data.group(1)))
+                page_props = payload.get("props", {}).get("pageProps", {})
+                manga_data = page_props.get("initialManga", {})
+                site_config = page_props.get("siteConfig", {})
+            except (json.JSONDecodeError, AttributeError):
+                manga_data = {}
+        chapter_data = manga_data.get("chapters") or []
+        if manga_data.get("id") and site_config.get("apiUrl"):
+            api_url = str(site_config["apiUrl"]).rstrip("/") + "/titles/" + str(manga_data["id"]) + "/chapters"
+            if manga_data.get("cv"):
+                api_url += "?" + urlencode({"cv": manga_data["cv"]})
+            try:
+                raw, _ = self.fetch(api_url, {"headers": {"Origin": urlparse(final_url).scheme + "://" + str(urlparse(final_url).hostname), "Referer": final_url}})
+                api_payload = json.loads(raw)
+                api_data = api_payload.get("data") or api_payload
+                if isinstance(api_data, dict) and isinstance(api_data.get("chapters"), list):
+                    chapter_data = api_data["chapters"]
+            except (ParserError, json.JSONDecodeError, AttributeError):
+                pass
+        for row in chapter_data:
+            if not isinstance(row, dict) or not row.get("url"):
+                continue
+            link = urljoin(final_url, str(row["url"]))
+            title = str(row.get("name") or row.get("slug") or row.get("id") or "Chapter")
+            chapters[link] = {
+                "title": title,
+                "uniq": str(row.get("id") or row.get("slug") or link),
+                "link": link,
+                "downloadable": True,
+                "availability": "Публичная глава",
+                "date": str(row.get("updatedAt") or row.get("updated_at") or ""),
+            }
+        for match in re.finditer(r'<a\b[^>]*href=["\']([^"\']+)["\'][^>]*>(.*?)</a>', page, re.I | re.S):
+            link = urljoin(final_url, html.unescape(match.group(1)))
+            path = urlparse(link).path.rstrip("/")
+            if not re.search(r"/(?:chapter|notice)-[^/]+$", path, re.I):
+                continue
+            title = _plain_text(match.group(2))
+            if not title:
+                continue
+            chapters.setdefault(link, {
+                "title": title,
+                "uniq": path.rsplit("/", 1)[-1],
+                "link": link,
+                "downloadable": True,
+                "availability": "Публичная глава",
+            })
+        if not chapters:
+            raise ParserError("Comizy не вернул список глав")
+
+        def chapter_key(item: dict[str, Any]) -> tuple[int, float, str]:
+            number = re.search(r"(\d+(?:\.\d+)?)", item["title"])
+            return (0 if number else 1, float(number.group(1)) if number else 0, item["title"])
+
+        chapter_rows = sorted(chapters.values(), key=chapter_key)
+        slug = [part for part in urlparse(final_url).path.split("/") if part]
+        title = str(manga_data.get("name") or _meta(page, "og:title") or (slug[0].replace("-", " ").title() if slug else "Comizy"))
+        title = re.sub(r"\s*[-|]\s*(?:Comizy|MangaBuddy).*$", "", title, flags=re.I).strip()
+        authors = manga_data.get("authors") or []
+        return {
+            "source": "comizy",
+            "link": final_url,
+            "uniq": slug[0] if slug else title,
+            "title": title,
+            "author": ", ".join(str(item.get("name")) for item in authors if isinstance(item, dict) and item.get("name")),
+            "summary": str(manga_data.get("summary") or _meta(page, "og:description")),
+            "cover": str(manga_data.get("cover") or _meta(page, "og:image")),
+            "genres": [str(item.get("name")) for item in manga_data.get("genres") or [] if isinstance(item, dict) and item.get("name")],
+            "status": str(manga_data.get("status") or ""),
+            "chapters": chapter_rows,
+        }
+
+    def chapter(self, url: str) -> list[str]:
+        parsed = urlparse(normalize_url(url))
+        if parsed.hostname not in self.accepted_hosts:
+            raise ParserError("Некорректная ссылка главы Comizy")
+        page, _ = self.fetch(url, {"headers": {"Referer": self.host + "/"}})
+        images = re.findall(
+            r'https://x\d+\.cmzcdn\.org/[^"\'\\<>\s]+\.(?:webp|jpe?g|png)(?:\?[^"\'\\<>\s]*)?',
+            page,
+            re.I,
+        )
+        images = list(dict.fromkeys(html.unescape(item) for item in images))
+        if not images:
+            raise ParserError("Comizy не вернул изображения главы")
+        return images
 
 
 class NaverWebtoonEngine(Engine):
