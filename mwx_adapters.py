@@ -31,6 +31,24 @@ BUILTIN_SOURCES: list[dict[str, Any]] = [
         "direct": True,
         "download": False,
     },
+    {
+        "id": "kakao-page",
+        "title": "Kakao Page",
+        "host": "https://page.kakao.com",
+        "status": "blocked",
+        "catalog": False,
+        "direct": True,
+        "download": False,
+    },
+    {
+        "id": "ridibooks",
+        "title": "Ridi",
+        "host": "https://ridibooks.com",
+        "status": "partial",
+        "catalog": False,
+        "direct": True,
+        "download": False,
+    },
 ]
 
 
@@ -43,6 +61,10 @@ def create_engine(source_id: str, parser_dir: Path, timeout: float) -> Engine:
         return NaverWebtoonEngine(timeout=timeout)
     if source_id == "naver-series":
         return NaverSeriesEngine(timeout=timeout)
+    if source_id == "kakao-page":
+        return KakaoPageEngine(timeout=timeout)
+    if source_id == "ridibooks":
+        return RidiEngine(timeout=timeout)
     from mwx import load_source
     return Engine(load_source(source_id, parser_dir), timeout=timeout)
 
@@ -64,6 +86,28 @@ def _meta(page: str, property_name: str) -> str:
         if match:
             return html.unescape(match.group(1)).strip()
     return ""
+
+
+def _path_number(url: str, marker: str) -> int:
+    parts = [part for part in urlparse(normalize_url(url)).path.split("/") if part]
+    try:
+        value = parts[parts.index(marker) + 1]
+    except (ValueError, IndexError) as exc:
+        raise ParserError(f"В ссылке отсутствует числовой идентификатор после /{marker}/") from exc
+    if not value.isdigit():
+        raise ParserError(f"Идентификатор после /{marker}/ должен быть числом")
+    return int(value)
+
+
+def _assigned_json(page: str, variable: str) -> Any:
+    match = re.search(rf"\bvar\s+{re.escape(variable)}\s*=\s*", page)
+    if not match:
+        raise ParserError(f"Страница не содержит {variable}")
+    try:
+        value, _ = json.JSONDecoder().raw_decode(page[match.end():])
+    except json.JSONDecodeError as exc:
+        raise ParserError(f"Страница содержит некорректный {variable}") from exc
+    return value
 
 
 class NaverWebtoonEngine(Engine):
@@ -220,3 +264,144 @@ class NaverSeriesEngine(Engine):
 
     def chapter(self, url: str) -> list[str]:
         raise ParserError("Скачивание Naver Series пока недоступно: главы открываются в защищённом Viewer")
+
+
+class KakaoPageEngine(Engine):
+    host = "https://page.kakao.com"
+
+    def __init__(self, timeout: float = 30):
+        super().__init__(Source(Path("kakao-page"), {
+            "name": "kakao-page", "title": "Kakao Page", "host": self.host,
+        }), timeout=timeout)
+
+    def _json(self, path: str, referer: str) -> dict[str, Any]:
+        try:
+            raw, _ = self.fetch(self.host + path, {"headers": {
+                "Accept": "application/json, text/plain, */*",
+                "Referer": referer,
+                "X-Requested-With": "XMLHttpRequest",
+            }})
+            payload = json.loads(raw)
+        except (ParserError, json.JSONDecodeError) as exc:
+            raise ParserError(
+                "Kakao Page отклонил прямой запрос. Источник требует браузерную сессию; "
+                "метаданные и скачивание пока недоступны."
+            ) from exc
+        if not isinstance(payload, dict):
+            raise ParserError("Kakao Page вернул неожиданный ответ")
+        return payload
+
+    def manga(self, url: str) -> dict[str, Any]:
+        parsed = urlparse(normalize_url(url))
+        if parsed.hostname not in {"page.kakao.com", "m-page.kakao.com"}:
+            raise ParserError("Для Kakao Page нужна ссылка page.kakao.com/content/ID")
+        series_id = _path_number(url, "content")
+        canonical = f"{self.host}/content/{series_id}"
+        overview = self._json(
+            f"/api/gateway/api/v1/content/overview?{urlencode({'series_id': series_id})}", canonical
+        )
+        product_list = self._json(
+            f"/api/gateway/api/v2/content/product/list?{urlencode({'series_id': series_id, 'sort_type': 'asc', 'after': 0})}",
+            canonical,
+        )
+        content = overview.get("contentHomeOverview") or overview.get("content") or overview
+        if isinstance(content, dict) and isinstance(content.get("content"), dict):
+            content = content["content"]
+        edges = product_list.get("contentHomeProductList") or product_list.get("edges") or []
+        if isinstance(edges, dict):
+            edges = edges.get("edges") or edges.get("products") or []
+        chapters = []
+        for edge in edges if isinstance(edges, list) else []:
+            item = edge.get("node") if isinstance(edge, dict) else None
+            item = item if isinstance(item, dict) else edge
+            single = item.get("single") if isinstance(item, dict) else None
+            single = single if isinstance(single, dict) else item
+            product_id = single.get("productId") or single.get("id")
+            if not product_id:
+                continue
+            chapters.append({
+                "title": str(single.get("title") or single.get("name") or product_id),
+                "uniq": str(product_id),
+                "link": f"{self.host}/viewer?productId={product_id}",
+                "downloadable": False,
+                "availability": "Защищённый Kakao Page Viewer",
+            })
+        return {
+            "source": "kakao-page", "link": canonical, "uniq": str(series_id),
+            "title": str(content.get("title") or content.get("seriesTitle") or series_id),
+            "author": str(content.get("author") or content.get("authors") or ""),
+            "summary": str(content.get("description") or content.get("synopsis") or ""),
+            "cover": str(content.get("thumbnail") or content.get("image") or ""),
+            "chapters": chapters,
+            "notice": "Список доступен только когда Kakao разрешает запросы текущей браузерной сессии. Скачивание Viewer не поддерживается.",
+        }
+
+    def chapter(self, url: str) -> list[str]:
+        raise ParserError("Скачивание Kakao Page недоступно: главы открываются в защищённом Viewer")
+
+
+class RidiEngine(Engine):
+    host = "https://ridibooks.com"
+
+    def __init__(self, timeout: float = 30):
+        super().__init__(Source(Path("ridibooks"), {
+            "name": "ridibooks", "title": "Ridi", "host": self.host,
+        }), timeout=timeout)
+
+    def manga(self, url: str) -> dict[str, Any]:
+        parsed = urlparse(normalize_url(url))
+        if parsed.hostname not in {"ridibooks.com", "www.ridibooks.com"}:
+            raise ParserError("Для Ridi нужна ссылка ridibooks.com/books/ID")
+        book_id = _path_number(url, "books")
+        canonical = f"{self.host}/books/{book_id}"
+        page, _ = self.fetch(canonical, {"headers": {"Referer": self.host + "/webtoon/recommendation"}})
+        rows = _assigned_json(page, "seriesBookListJson")
+        if not isinstance(rows, list) or not rows:
+            raise ParserError("Ridi не вернул список выпусков")
+        book = _assigned_json(page, "book")
+        if not isinstance(book, dict):
+            book = {}
+        try:
+            detail = _assigned_json(page, "bookDetail")
+        except ParserError:
+            detail = {}
+        if not isinstance(detail, dict):
+            detail = {}
+        price_info = detail.get("series_price_info") or {}
+        try:
+            free_count = int(price_info.get("free_book_count") or 0)
+        except (TypeError, ValueError):
+            free_count = 0
+        chapters = []
+        for index, row in enumerate(rows, 1):
+            if not isinstance(row, dict):
+                continue
+            chapter_id = str(row.get("id") or "")
+            if not chapter_id:
+                continue
+            volume = row.get("volume")
+            chapters.append({
+                "title": str(row.get("title") or (f"Episode {volume}" if volume else f"Episode {index}")),
+                "uniq": chapter_id,
+                "link": f"{self.host}/books/{chapter_id}",
+                "downloadable": False,
+                "trial": bool(row.get("is_trial")),
+                "free": index <= free_count,
+                "availability": "Ridi Viewer: скачивание не поддерживается",
+            })
+        title = str(detail.get("series_title") or _meta(page, "og:title") or book.get("title") or book_id)
+        title = re.sub(r"\s*[-|]\s*RIDI.*$", "", title, flags=re.I).strip()
+        summary = str(detail.get("description") or _meta(page, "og:description"))
+        summary = html.unescape(re.sub(r"<[^>]+>", "", summary)).strip()
+        return {
+            "source": "ridibooks", "link": canonical, "uniq": str(book_id),
+            "title": title,
+            "author": str(detail.get("author") or book.get("author") or book.get("author_name") or ""),
+            "summary": summary,
+            "cover": _meta(page, "og:image") or str(book.get("thumbnail") or ""),
+            "chapters": chapters,
+            "notice": "Метаданные и список выпусков доступны. Изображения защищены Ridi Viewer.",
+        }
+
+    def chapter(self, url: str) -> list[str]:
+        raise ParserError("Скачивание Ridi недоступно: главы открываются в защищённом Viewer")
