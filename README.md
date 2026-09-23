@@ -66,6 +66,16 @@ https://page.kakao.com/content/57770713
 https://mangabuddy.com/pure-villain
 ```
 
+### WEBTOON
+
+Официальный источник `WEBTOON (official)` получает все публичные эпизоды тайтла
+и скачивает их изображения. Закрытые Fast Pass и доступные только в приложении
+эпизоды в список загрузки не добавляются.
+
+```text
+https://www.webtoons.com/en/romance/lore-olympus/list?title_no=1320
+```
+
 Загрузки по умолчанию сохраняются в `downloads`. Состояние очереди показывается
 внизу страницы и обновляется автоматически.
 

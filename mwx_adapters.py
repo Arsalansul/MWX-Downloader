@@ -14,6 +14,15 @@ from mwx import Engine, ParserError, Source, normalize_url
 
 BUILTIN_SOURCES: list[dict[str, Any]] = [
     {
+        "id": "webtoon-global",
+        "title": "WEBTOON (official)",
+        "host": "https://www.webtoons.com",
+        "status": "working",
+        "catalog": False,
+        "direct": True,
+        "download": True,
+    },
+    {
         "id": "comizy",
         "title": "Comizy / MangaBuddy",
         "host": "https://mangabuddy.com",
@@ -66,6 +75,8 @@ def builtin_source_rows() -> list[dict[str, Any]]:
 
 
 def create_engine(source_id: str, parser_dir: Path, timeout: float) -> Engine:
+    if source_id == "webtoon-global":
+        return WebtoonGlobalEngine(timeout=timeout)
     if source_id == "comizy":
         return ComizyEngine(timeout=timeout)
     if source_id == "naver-webtoon":
@@ -123,6 +134,92 @@ def _assigned_json(page: str, variable: str) -> Any:
 
 def _plain_text(value: str) -> str:
     return re.sub(r"\s+", " ", html.unescape(re.sub(r"<[^>]+>", " ", value))).strip()
+
+
+class WebtoonGlobalEngine(Engine):
+    host = "https://www.webtoons.com"
+
+    def __init__(self, timeout: float = 30):
+        super().__init__(Source(Path("webtoon-global"), {
+            "name": "webtoon-global", "title": "WEBTOON (official)", "host": self.host,
+        }), timeout=timeout)
+
+    @staticmethod
+    def _episode_rows(page: str, base_url: str) -> list[dict[str, Any]]:
+        rows = []
+        for match in re.finditer(r'<li\b[^>]*class=["\'][^"\']*_episodeItem[^"\']*["\'][^>]*>(.*?)</li>', page, re.I | re.S):
+            block = match.group(1)
+            link_match = re.search(r'<a\b[^>]*href=["\']([^"\']+/viewer\?[^"\']+)["\']', block, re.I)
+            if not link_match:
+                continue
+            link = urljoin(base_url, html.unescape(link_match.group(1)))
+            query = parse_qs(urlparse(link).query)
+            episode_no = str((query.get("episode_no") or [""])[0])
+            title_match = re.search(r'<span\b[^>]*class=["\']subj["\'][^>]*>(.*?)</span>', block, re.I | re.S)
+            date_match = re.search(r'<span\b[^>]*class=["\']date["\'][^>]*>(.*?)</span>', block, re.I | re.S)
+            rows.append({
+                "title": _plain_text(title_match.group(1)) if title_match else f"Episode {episode_no}",
+                "uniq": episode_no or link,
+                "link": link,
+                "downloadable": True,
+                "availability": "Публичный эпизод WEBTOON",
+                "date": _plain_text(date_match.group(1)) if date_match else "",
+            })
+        return rows
+
+    def manga(self, url: str) -> dict[str, Any]:
+        parsed = urlparse(normalize_url(url))
+        if parsed.hostname not in {"webtoons.com", "www.webtoons.com"}:
+            raise ParserError("Для WEBTOON нужна ссылка www.webtoons.com/.../list?title_no=ID")
+        title_no = _query_number(url, "title_no")
+        page, final_url = self.fetch(url, {"headers": {"Referer": self.host + "/en/"}})
+        chapters: dict[str, dict[str, Any]] = {}
+        page_number = 1
+        current_page = page
+        while page_number <= 200:
+            batch = self._episode_rows(current_page, final_url)
+            before = len(chapters)
+            for row in batch:
+                chapters[row["link"]] = row
+            if not batch or len(chapters) == before:
+                break
+            page_number += 1
+            separator = "&" if "?" in final_url else "?"
+            current_page, _ = self.fetch(
+                final_url + separator + urlencode({"page": page_number}),
+                {"headers": {"Referer": final_url}},
+            )
+        if not chapters:
+            raise ParserError("WEBTOON не вернул публичные эпизоды")
+        ordered = sorted(chapters.values(), key=lambda item: int(item["uniq"]) if str(item["uniq"]).isdigit() else 0)
+        title_match = re.search(r'<h1\b[^>]*class=["\']subj["\'][^>]*>(.*?)</h1>', page, re.I | re.S)
+        author_match = re.search(r'<div\b[^>]*class=["\']author_area["\'][^>]*>(.*?)</div>', page, re.I | re.S)
+        cover_match = re.search(r'<div\b[^>]*class=["\']detail_header[^"\']*["\'][^>]*>.*?<img\b[^>]*src=["\']([^"\']+)', page, re.I | re.S)
+        return {
+            "source": "webtoon-global", "link": final_url, "uniq": str(title_no),
+            "title": _plain_text(title_match.group(1)) if title_match else (_meta(page, "og:title") or str(title_no)),
+            "author": _plain_text(author_match.group(1)) if author_match else "",
+            "summary": _meta(page, "og:description"),
+            "cover": html.unescape(cover_match.group(1)) if cover_match else _meta(page, "og:image"),
+            "chapters": ordered,
+        }
+
+    def chapter(self, url: str) -> list[str]:
+        parsed = urlparse(normalize_url(url))
+        if parsed.hostname not in {"webtoons.com", "www.webtoons.com"}:
+            raise ParserError("Некорректная ссылка эпизода WEBTOON")
+        page, _ = self.fetch(url, {"headers": {"Referer": url}})
+        images = []
+        for tag in re.findall(r'<img\b[^>]*>', page, re.I | re.S):
+            if not re.search(r'class=["\'][^"\']*\b_images\b', tag, re.I):
+                continue
+            source = re.search(r'data-url=["\']([^"\']+)', tag, re.I)
+            if source:
+                images.append(html.unescape(source.group(1)))
+        images = list(dict.fromkeys(images))
+        if not images:
+            raise ParserError("WEBTOON не вернул изображения: эпизод может быть закрыт или доступен только в приложении")
+        return images
 
 
 class ComizyEngine(Engine):
